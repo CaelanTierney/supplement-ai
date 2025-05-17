@@ -20,7 +20,7 @@ body {
   position: fixed;
   bottom: 18px;
   right: 32px;
-  font-size: 0.92em;
+  font-size: 0.78em;
   color: #b0b8c9;
   letter-spacing: 0.01em;
   z-index: 10;
@@ -158,9 +158,20 @@ button:hover {
     margin-bottom: 8px;
     margin-top: 0;
     z-index: 100;
+    font-size: 0.78em;
+  }
+  body {
+    padding: 16px;
   }
   .container {
-    margin: 24px 8px;
-    padding: 18px 6px 12px 6px;
+    margin: 24px auto;
+    padding: 24px 16px;
+    width: 92%;
+    max-width: 380px;
+    box-sizing: border-box;
+  }
+  .result-card {
+    padding: 16px 12px;
+    margin: 0 -4px;
   }
 } 
