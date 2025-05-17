@@ -177,28 +177,14 @@ button:active {
 }
 
 @media (max-width: 600px) {
-  html, body {
-    height: 100%;
-    overflow-x: hidden;
-    position: relative;
+  .credit {
+    display: none;
   }
 
   body {
-    padding: 10px;
-    display: block;
-  }
-
-  .credit {
-    position: fixed;
-    top: 10px;
-    left: 0;
-    right: 0;
-    text-align: center;
-    margin: 0;
-    z-index: 100;
-    font-size: 0.78em;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+    padding: 16px;
+    min-height: 100vh;
+    height: auto;
   }
 
   .container {
@@ -207,8 +193,6 @@ button:active {
     width: 92%;
     max-width: 380px;
     box-sizing: border-box;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
   }
 
   form {
