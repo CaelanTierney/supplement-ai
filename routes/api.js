@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const supplementController = require('../controllers/supplementController');
+const openaiService = require('../services/openaiService');
 
 // In-memory array for demonstration
 let supplements = [
@@ -50,8 +51,20 @@ router.delete('/supplements/:id', (req, res) => {
   res.status(204).send();
 });
 
-// Existing POST /supplement endpoint
-router.post('/supplement', supplementController.getSupplementInfo);
+// POST /api/supplement - AI evidence-based summary
+router.post('/supplement', async (req, res) => {
+  const { supplement, outcome } = req.body;
+  if (!supplement || !outcome) {
+    return res.status(400).json({ error: 'Please provide both a supplement and a health outcome.' });
+  }
+  try {
+    const prompt = `You are an evidence-based nutrition expert specializing in supplement research. Your task is to provide information about supplements as if you're summarizing data from examine.com.\n\nFor the query: What do you think of ${supplement} for ${outcome}?\n\n1. Focus primarily on whether there is human evidence to support the supplement for the specific outcome.\n2. Provide information on dosage and timing if available.\n3. Present information in a casual but scientifically accurate way.\n4. Be clear about the level of evidence (strong, moderate, preliminary, or insufficient).\n5. Do not exaggerate benefits or downplay risks.\n6. Limit your response to 2-3 paragraphs.\n\nIf there's insufficient information, be honest about the limitations of current research.`;
+    const aiResponse = await openaiService.getCompletion(prompt);
+    res.json({ result: aiResponse });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to get supplement information. Please try again later.' });
+  }
+});
 
 // 404 handler for /api/*
 router.use((req, res) => {

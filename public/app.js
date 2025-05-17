@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const data = await res.json();
       loading.style.display = 'none';
       if (res.ok && data.result) {
-        result.innerHTML = `<div class="result-card">${data.result.replace(/\n/g, '<br>')}</div>`;
+        result.innerHTML = `<div class="result-card"><h2 style='margin-top:0;font-size:1.1em;font-weight:700;'>What do you think of ${supplement} for ${outcome}?</h2>${data.result.replace(/\n/g, '<br>')}</div>`;
       } else if (data.error) {
         result.innerHTML = `<div class="result-card" style="color:#ffb4b4;">${data.error}</div>`;
       } else {

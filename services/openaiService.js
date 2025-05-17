@@ -1,5 +1,9 @@
 console.log('Loaded openaiService');
-const openai = require('../config/openai');
+const { OpenAI } = require('openai');
+const dotenv = require('dotenv');
+dotenv.config();
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const getSupplementEvidence = async (supplement, outcome) => {
   try {
@@ -37,6 +41,25 @@ const getSupplementEvidence = async (supplement, outcome) => {
   }
 };
 
+async function getCompletion(prompt) {
+  try {
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4-turbo',
+      messages: [
+        { role: 'system', content: 'You are a helpful, evidence-based supplement research assistant.' },
+        { role: 'user', content: prompt }
+      ],
+      max_tokens: 800,
+      temperature: 0.7
+    });
+    return response.choices[0].message.content;
+  } catch (error) {
+    console.error('Error in OpenAI service:', error);
+    throw new Error('Failed to get completion from OpenAI');
+  }
+}
+
 module.exports = {
-  getSupplementEvidence
+  getSupplementEvidence,
+  getCompletion
 };
