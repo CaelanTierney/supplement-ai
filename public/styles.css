@@ -48,7 +48,7 @@ h1 {
   color: #fefef1;
   text-align: center;
   width: 100%;
-  max-width: 320px;
+  max-width: 360px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -59,7 +59,7 @@ h1 {
   color: #fefef1;
   text-align: center;
   width: 100%;
-  max-width: 320px;
+  max-width: 360px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -77,7 +77,7 @@ form {
 .input-wrapper {
   position: relative;
   width: 100%;
-  max-width: 320px;
+  max-width: 360px;
   margin: 0 auto;
 }
 
@@ -105,7 +105,7 @@ input[type="text"]:focus {
 .button-wrapper {
   position: relative;
   width: 100%;
-  max-width: 320px;
+  max-width: 360px;
   margin: 0 auto;
 }
 
@@ -217,8 +217,7 @@ button:active {
     max-height: calc(100vh - 20px);
   }
 
-  .input-wrapper,
-  .button-wrapper {
+  h1, .subtitle, .input-wrapper, .button-wrapper {
     max-width: 100%;
   }
 
