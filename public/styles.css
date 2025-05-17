@@ -1,19 +1,22 @@
 html, body {
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  color: #333;
   overflow-y: auto;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: #1a2942;
-  color: #fff;
-  font-family: 'Montserrat', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  padding: 20px;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .credit {
@@ -35,14 +38,15 @@ body {
 }
 
 .container {
-  max-width: 420px;
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 100%;
-  background: rgba(255,255,255,0.04);
-  border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
-  padding: 32px 24px 24px 24px;
-  text-align: center;
-  margin: 0 auto;
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -65,13 +69,16 @@ form {
 }
 
 input[type="text"] {
+  width: 100%;
   padding: 12px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1em;
-  background: #2d3e5e;
-  color: #fff;
-  outline: none;
+  margin: 8px 0;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  background: white;
 }
 
 input[type="text"]::placeholder {
@@ -79,18 +86,28 @@ input[type="text"]::placeholder {
 }
 
 button {
-  padding: 12px;
-  border-radius: 6px;
+  background: #4CAF50;
+  color: white;
+  padding: 12px 20px;
   border: none;
-  background: #2d6cdf;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1em;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation;
 }
+
 button:hover {
-  background: #1a4fa2;
+  background: #45a049;
+}
+
+button:active {
+  background: #3d8b40;
+  transform: translateY(1px);
 }
 
 #loading {
@@ -149,38 +166,83 @@ button:hover {
 }
 
 @media (max-width: 600px) {
-  .credit {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 8px;
-    margin-top: 0;
-    z-index: 100;
-    font-size: 0.78em;
-  }
   body {
-    padding: 16px;
-    min-height: 100vh;
-    height: auto;
+    padding: 10px;
   }
+  
   .container {
-    margin: 24px auto;
-    padding: 24px 16px;
-    width: 92%;
-    max-width: 380px;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 1;
+    padding: 1.5rem;
+    margin: 10px;
+    width: calc(100% - 20px);
+    max-width: none;
   }
-  .result-card {
-    padding: 16px 12px;
-    margin: 0 -4px;
-  }
-  input[type="text"], button {
+  
+  input[type="text"] {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    padding: 12px;
+    margin: 8px 0;
+    border: 2px solid #ddd;
+    border-radius: 8px;
     -webkit-appearance: none;
-    -moz-appearance: none;
     appearance: none;
+    background: white;
+  }
+  
+  button {
+    padding: 14px 20px; /* Larger touch target */
+    font-size: 16px;
+    margin-top: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+  }
+}
+
+.loading {
+  display: none;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.loading.active {
+  display: block;
+}
+
+#results {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  display: none;
+}
+
+#results.active {
+  display: block;
+}
+
+.error {
+  color: #dc3545;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  background: #f8d7da;
+  display: none;
+}
+
+.error.active {
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+  }
+  
+  button {
+    padding: 12px;
   }
 } 
