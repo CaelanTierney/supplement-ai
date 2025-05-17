@@ -126,6 +126,9 @@ button:active {
   padding: 15px;
   color: #fefef1;
   white-space: pre-wrap;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  max-height: 60vh;
 }
 
 .result-card {
@@ -136,8 +139,8 @@ button:active {
   text-align: left;
   font-size: 1.08em;
   line-height: 1.6;
-  max-height: 32vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .fade-in {
@@ -224,6 +227,17 @@ button:active {
   button {
     padding: 12px;
     margin-top: 12px;
+  }
+
+  #result {
+    margin-top: 15px;
+    padding: 10px;
+    max-height: 50vh;
+  }
+
+  .result-card {
+    padding: 15px 12px;
+    font-size: 1em;
   }
 }
 
