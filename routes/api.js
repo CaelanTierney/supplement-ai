@@ -62,6 +62,7 @@ router.delete('/supplements/:id', (req, res) => {
 
 // POST /api/supplement - AI evidence-based summary
 router.post('/supplement', async (req, res) => {
+  console.log('POST /api/supplement hit', req.body);
   let { supplement, outcome } = req.body;
   if (!supplement || !outcome) {
     return res.status(400).json({ error: 'Please provide both a supplement and a health outcome.' });
