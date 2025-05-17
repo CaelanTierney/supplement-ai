@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
       container.innerHTML = `
         <div id="result" class="fade-in">
           ${html}
-          <button id="reset-btn" class="reset-btn">Make another Search</button>
+          <button id="reset-btn" class="reset-btn">Make Another Search</button>
         </div>
       `;
       container.classList.remove('fade-out');
@@ -64,8 +64,10 @@ document.addEventListener('DOMContentLoaded', function () {
           showResult(`<div class=\"result-card\" style=\"color:#ffb4b4;\">Sorry, something went wrong.</div>`);
         }
       } catch (err) {
+        console.error('Fetch error:', err);
         loading.style.display = 'none';
-        showResult(`<div class=\"result-card\" style=\"color:#ffb4b4;\">Network error. Please try again.</div>`);
+        form.querySelector('button').disabled = false;
+        showResult(`<div class=\"result-card\" style=\"color:#ffb4b4;\">Network error. Please check your connection and try again.</div>`);
       }
     });
   }

@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const supplementController = require('../controllers/supplementController');
 const openaiService = require('../services/openaiService');
-const didYouMean = require('didyoumean2').default;
-const levenshtein = require('didyoumean2').levenshtein;
+const { default: didYouMean, levenshtein } = require('didyoumean2');
 
 // In-memory array for demonstration
 let supplements = [
@@ -63,33 +62,37 @@ router.delete('/supplements/:id', (req, res) => {
 
 // POST /api/supplement - AI evidence-based summary
 router.post('/supplement', async (req, res) => {
+  console.log('POST /api/supplement - Request received:', req.body);
   let { supplement, outcome } = req.body;
   if (!supplement || !outcome) {
+    console.log('Missing required fields:', { supplement, outcome });
     return res.status(400).json({ error: 'Please provide both a supplement and a health outcome.' });
   }
   // Fuzzy match supplement and outcome with strict threshold
   let correctedSupplement = supplement;
   let correctionMsg = '';
-  const supplementMatch = didYouMean(supplement, SUPPLEMENTS, { returnType: 'all-matches', threshold: 0.4 });
-  if (supplementMatch && supplementMatch.length > 0) {
-    const bestMatch = supplementMatch[0];
-    const distance = levenshtein(supplement.toLowerCase(), bestMatch.toLowerCase());
-    if (distance <= 2) {
-      correctedSupplement = bestMatch;
-      if (correctedSupplement.toLowerCase() !== supplement.toLowerCase()) {
-        correctionMsg = `Auto-corrected to "${correctedSupplement}" for supplement.`;
-      }
-    } else if (bestMatch.toLowerCase() !== supplement.toLowerCase()) {
-      return res.status(400).json({ error: `Did you mean "${bestMatch}" for supplement? Please clarify your input for precision.` });
-    }
-  }
-  // Fuzzy match outcome (less strict)
-  let correctedOutcome = outcome;
-  const outcomeMatch = didYouMean(outcome, OUTCOMES, { returnType: 'all-matches', threshold: 0.4 });
-  if (outcomeMatch && outcomeMatch.length > 0) {
-    correctedOutcome = outcomeMatch[0];
-  }
   try {
+    const supplementMatch = didYouMean(supplement, SUPPLEMENTS, { returnType: 'all-matches', threshold: 0.4 });
+    if (supplementMatch && supplementMatch.length > 0) {
+      const bestMatch = supplementMatch[0];
+      const distance = levenshtein(supplement.toLowerCase(), bestMatch.toLowerCase());
+      if (distance <= 2) {
+        correctedSupplement = bestMatch;
+        if (correctedSupplement.toLowerCase() !== supplement.toLowerCase()) {
+          correctionMsg = `Auto-corrected to "${correctedSupplement}" for supplement.`;
+        }
+      } else if (bestMatch.toLowerCase() !== supplement.toLowerCase()) {
+        return res.status(400).json({ error: `Did you mean "${bestMatch}" for supplement? Please clarify your input for precision.` });
+      }
+    }
+    // Fuzzy match outcome (less strict)
+    let correctedOutcome = outcome;
+    const outcomeMatch = didYouMean(outcome, OUTCOMES, { returnType: 'all-matches', threshold: 0.4 });
+    if (outcomeMatch && outcomeMatch.length > 0) {
+      correctedOutcome = outcomeMatch[0];
+    }
+    
+    console.log('Processing request with:', { correctedSupplement, correctedOutcome });
     const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${correctedSupplement} for ${correctedOutcome}?"
 - Use a casual, friendly, but evidence-based tone, as if you're talking to a friend who wants the real, science-backed scoop (not hype).
 - Focus on whether there is human evidence to support the supplement for the specific outcome, and summarize what examine.com's Human Effects Matrix and recommendations say.
@@ -99,9 +102,10 @@ router.post('/supplement', async (req, res) => {
 - Use 1–2 relevant emojis for engagement.
 - Be concise but thorough.`;
     const aiResponse = await openaiService.getCompletion(prompt);
+    console.log('AI response received successfully');
     res.json({ result: (correctionMsg ? correctionMsg + '<br>' : '') + aiResponse });
   } catch (error) {
-    console.error('OpenAI error:', error);
+    console.error('Error in /api/supplement:', error);
     if (error.code === 'insufficient_quota' || error.status === 429) {
       return res.status(503).json({ error: 'Sorry, the AI service is temporarily unavailable due to usage limits. Please try again later.' });
     }
