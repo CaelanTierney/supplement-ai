@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const supplementController = require('../controllers/supplementController');
 const openaiService = require('../services/openaiService');
-const { default: didYouMean, levenshtein } = require('didyoumean2');
+const didYouMean = require('didyoumean2').default;
+const { distance: levenshtein } = require('fastest-levenshtein');
 
 // In-memory array for demonstration
 let supplements = [
@@ -137,5 +138,4 @@ router.use((req, res) => {
   res.status(404).json({ error: 'API route not found' });
 });
 
-module.exports = router;
 module.exports = router;
