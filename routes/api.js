@@ -95,11 +95,6 @@ router.post('/supplement', async (req, res) => {
     }
 
     console.log('Processing request with:', { correctedSupplement, correctedOutcome });
-    
-    if (!process.env.OPENAI_API_KEY) {
-      console.error('OpenAI API key is not configured');
-      return res.status(500).json({ error: 'Server configuration error. Please try again later.' });
-    }
 
     const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${correctedSupplement} for ${correctedOutcome}?"
 - Use a casual, friendly, but evidence-based tone, as if you're talking to a friend who wants the real, science-backed scoop (not hype).
@@ -117,12 +112,22 @@ router.post('/supplement', async (req, res) => {
     res.json({ result: (correctionMsg ? correctionMsg + '<br>' : '') + aiResponse });
   } catch (error) {
     console.error('Error in /api/supplement:', error);
-    if (error.code === 'insufficient_quota' || error.status === 429) {
-      return res.status(503).json({ error: 'Sorry, the AI service is temporarily unavailable due to usage limits. Please try again later.' });
-    }
-    if (error.message?.includes('API key')) {
+    
+    // Handle specific error cases
+    if (error.message.includes('API key')) {
       return res.status(500).json({ error: 'Server configuration error. Please try again later.' });
     }
+    if (error.message.includes('Rate limit')) {
+      return res.status(429).json({ error: 'Service is busy. Please try again in a few moments.' });
+    }
+    if (error.message.includes('Connection error')) {
+      return res.status(503).json({ error: 'Service temporarily unavailable. Please try again.' });
+    }
+    if (error.message.includes('Invalid response')) {
+      return res.status(500).json({ error: 'Unexpected response from AI service. Please try again.' });
+    }
+    
+    // Generic error response
     res.status(500).json({ error: 'Failed to get supplement information. Please try again later.' });
   }
 });
@@ -132,4 +137,5 @@ router.use((req, res) => {
   res.status(404).json({ error: 'API route not found' });
 });
 
+module.exports = router;
 module.exports = router;
