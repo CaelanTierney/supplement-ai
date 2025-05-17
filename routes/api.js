@@ -68,10 +68,11 @@ router.post('/supplement', async (req, res) => {
     console.log('Missing required fields:', { supplement, outcome });
     return res.status(400).json({ error: 'Please provide both a supplement and a health outcome.' });
   }
-  // Fuzzy match supplement and outcome with strict threshold
-  let correctedSupplement = supplement;
-  let correctionMsg = '';
+
   try {
+    // Fuzzy match supplement and outcome with strict threshold
+    let correctedSupplement = supplement;
+    let correctionMsg = '';
     const supplementMatch = didYouMean(supplement, SUPPLEMENTS, { returnType: 'all-matches', threshold: 0.4 });
     if (supplementMatch && supplementMatch.length > 0) {
       const bestMatch = supplementMatch[0];
@@ -85,14 +86,21 @@ router.post('/supplement', async (req, res) => {
         return res.status(400).json({ error: `Did you mean "${bestMatch}" for supplement? Please clarify your input for precision.` });
       }
     }
+
     // Fuzzy match outcome (less strict)
     let correctedOutcome = outcome;
     const outcomeMatch = didYouMean(outcome, OUTCOMES, { returnType: 'all-matches', threshold: 0.4 });
     if (outcomeMatch && outcomeMatch.length > 0) {
       correctedOutcome = outcomeMatch[0];
     }
-    
+
     console.log('Processing request with:', { correctedSupplement, correctedOutcome });
+    
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('OpenAI API key is not configured');
+      return res.status(500).json({ error: 'Server configuration error. Please try again later.' });
+    }
+
     const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${correctedSupplement} for ${correctedOutcome}?"
 - Use a casual, friendly, but evidence-based tone, as if you're talking to a friend who wants the real, science-backed scoop (not hype).
 - Focus on whether there is human evidence to support the supplement for the specific outcome, and summarize what examine.com's Human Effects Matrix and recommendations say.
@@ -101,13 +109,19 @@ router.post('/supplement', async (req, res) => {
 - Always mention the latest update date for the examine.com page (if available).
 - Use 1–2 relevant emojis for engagement.
 - Be concise but thorough.`;
+
+    console.log('Sending request to OpenAI...');
     const aiResponse = await openaiService.getCompletion(prompt);
-    console.log('AI response received successfully');
+    console.log('Received response from OpenAI');
+    
     res.json({ result: (correctionMsg ? correctionMsg + '<br>' : '') + aiResponse });
   } catch (error) {
     console.error('Error in /api/supplement:', error);
     if (error.code === 'insufficient_quota' || error.status === 429) {
       return res.status(503).json({ error: 'Sorry, the AI service is temporarily unavailable due to usage limits. Please try again later.' });
+    }
+    if (error.message?.includes('API key')) {
+      return res.status(500).json({ error: 'Server configuration error. Please try again later.' });
     }
     res.status(500).json({ error: 'Failed to get supplement information. Please try again later.' });
   }

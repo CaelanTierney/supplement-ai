@@ -1,6 +1,7 @@
 html, body {
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
@@ -9,7 +10,6 @@ body {
   font-family: 'Montserrat', Arial, sans-serif;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -162,6 +162,8 @@ button:hover {
   }
   body {
     padding: 16px;
+    min-height: 100vh;
+    height: auto;
   }
   .container {
     margin: 24px auto;
@@ -169,9 +171,16 @@ button:hover {
     width: 92%;
     max-width: 380px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
   }
   .result-card {
     padding: 16px 12px;
     margin: 0 -4px;
+  }
+  input[type="text"], button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
   }
 } 
