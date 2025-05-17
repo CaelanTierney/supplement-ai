@@ -1,3 +1,8 @@
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
 body {
   background: #1a2942;
   color: #fff;
@@ -5,7 +10,10 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .credit {
@@ -28,12 +36,13 @@ body {
 
 .container {
   max-width: 420px;
-  margin: 60px auto;
+  width: 100%;
   background: rgba(255,255,255,0.04);
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.12);
   padding: 32px 24px 24px 24px;
   text-align: center;
+  margin: 0 auto;
 }
 
 h1 {
@@ -103,6 +112,8 @@ button:hover {
   text-align: left;
   font-size: 1.08em;
   line-height: 1.6;
+  max-height: 32vh;
+  overflow-y: auto;
 }
 
 @media (max-width: 600px) {
