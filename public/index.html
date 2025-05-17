@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supplement AI</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Supplement AI</h1>
+    <p class="subtitle">Evidence-based supplement advice, focused on human data.</p>
+    <form id="supplement-form">
+      <input type="text" id="supplement" name="supplement" placeholder="e.g. Creatine" required />
+      <input type="text" id="outcome" name="outcome" placeholder="e.g. muscle growth" required />
+      <button type="submit">Ask</button>
+    </form>
+    <div id="loading" style="display:none;">Loading...</div>
+    <div id="result"></div>
+  </div>
+  <script src="/app.js"></script>
+</body>
+</html> 

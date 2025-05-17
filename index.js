@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/css', express.static(path.join(__dirname, 'views/css')));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/index.html'));
+  res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
 let apiRoutes;
