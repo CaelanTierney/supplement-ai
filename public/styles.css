@@ -299,10 +299,9 @@ button:active {
 
 .credit {
   position: fixed;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  bottom: 18px;
+  right: 32px;
+  text-align: right;
   font-size: 14px;
   color: #fefef1;
   z-index: 1;
