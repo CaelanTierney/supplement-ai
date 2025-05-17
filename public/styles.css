@@ -206,7 +206,14 @@ button:active {
 
 @media (max-width: 600px) {
   .credit {
-    display: none;
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    right: auto;
+    bottom: auto;
   }
 
   body {
