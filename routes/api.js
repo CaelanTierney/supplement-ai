@@ -91,6 +91,9 @@ router.post('/supplement', async (req, res) => {
     res.json({ result: (correctionMsg ? correctionMsg + '\n' : '') + aiResponse });
   } catch (error) {
     console.error('OpenAI error:', error);
+    if (error.code === 'insufficient_quota' || error.status === 429) {
+      return res.status(503).json({ error: 'Sorry, the AI service is temporarily unavailable due to usage limits. Please try again later.' });
+    }
     res.status(500).json({ error: 'Failed to get supplement information. Please try again later.' });
   }
 });
