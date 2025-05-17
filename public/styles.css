@@ -1,12 +1,8 @@
 html, body {
   min-height: 100vh;
-  margin: 0;
-  padding: 0;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-  position: relative;
 }
 
 body {
@@ -20,8 +16,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  z-index: 1;
 }
 
 .credit {
@@ -88,7 +82,8 @@ input[type="text"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  touch-action: manipulation;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 input[type="text"]::placeholder {
@@ -108,7 +103,7 @@ button {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  touch-action: manipulation;
+  width: 100%;
 }
 
 button:hover {
@@ -195,7 +190,6 @@ button:active {
     padding: 16px;
     min-height: 100vh;
     height: auto;
-    position: relative;
   }
   .container {
     margin: 24px auto;
@@ -203,8 +197,6 @@ button:active {
     width: 92%;
     max-width: 380px;
     box-sizing: border-box;
-    position: relative;
-    z-index: 1;
   }
   .result-card {
     padding: 16px 12px;
@@ -215,6 +207,15 @@ button:active {
     -moz-appearance: none;
     appearance: none;
     touch-action: manipulation;
+    font-size: 16px;
+  }
+  input[type="text"] {
+    padding: 12px;
+    margin: 0;
+  }
+  button {
+    padding: 12px;
+    margin-top: 12px;
   }
 }
 
