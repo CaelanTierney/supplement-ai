@@ -150,11 +150,14 @@ button:hover {
 
 @media (max-width: 600px) {
   .credit {
-    position: static;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     text-align: center;
     margin-bottom: 8px;
     margin-top: 0;
+    z-index: 100;
   }
   .container {
     margin: 24px 8px;
