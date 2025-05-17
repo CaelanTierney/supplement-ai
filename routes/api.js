@@ -90,7 +90,14 @@ router.post('/supplement', async (req, res) => {
     correctedOutcome = outcomeMatch[0];
   }
   try {
-    const prompt = `You are an evidence-based nutrition expert specializing in supplement research. Your task is to provide information about supplements as if you're summarizing data from examine.com.\n\nFor the query: What do you think of ${correctedSupplement} for ${correctedOutcome}?\n\nStructure your answer with the following sections:\n- What it is\n- Recommended dose (with units)\n- Best forms\n- Populations possibly useful for\n- Human evidence summary (summarize the Human Effects Matrix)\n- Latest update date for the examine.com page on this supplement (if available)\n\nIf there is no human data, say so clearly.\nIf the supplement is not found, say so.\nPresent information in a casual, evidence-based way.\nAdd 1-2 relevant emojis.\nBe concise but thorough.\n\nIf there's insufficient information, be honest about the limitations of current research.`;
+    const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${correctedSupplement} for ${correctedOutcome}?"
+- Use a casual, friendly, but evidence-based tone, as if you're talking to a friend who wants the real, science-backed scoop (not hype).
+- Focus on whether there is human evidence to support the supplement for the specific outcome, and summarize what examine.com's Human Effects Matrix and recommendations say.
+- If there is no human evidence, say so clearly.
+- If there is evidence, summarize the strength, quality, and what examine.com suggests (including typical dosage, best forms, and populations, if available).
+- Always mention the latest update date for the examine.com page (if available).
+- Use 1–2 relevant emojis for engagement.
+- Be concise but thorough.`;
     const aiResponse = await openaiService.getCompletion(prompt);
     res.json({ result: (correctionMsg ? correctionMsg + '<br>' : '') + aiResponse });
   } catch (error) {
