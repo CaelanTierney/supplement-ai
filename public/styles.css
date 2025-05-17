@@ -116,6 +116,38 @@ button:hover {
   overflow-y: auto;
 }
 
+.fade-in {
+  animation: fadeIn 0.25s;
+}
+.fade-out {
+  animation: fadeOut 0.2s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-20px); }
+}
+
+.reset-btn {
+  margin: 24px auto 0 auto;
+  display: block;
+  padding: 12px 24px;
+  border-radius: 6px;
+  border: none;
+  background: #2d6cdf;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.reset-btn:hover {
+  background: #1a4fa2;
+}
+
 @media (max-width: 600px) {
   .credit {
     position: static;
