@@ -160,6 +160,10 @@ button:active {
   line-height: 1.6;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .fade-in {
@@ -266,6 +270,12 @@ button:active {
   .subtitle {
     margin-bottom: 14px;
   }
+
+  #results, .result-card {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+  }
 }
 
 .loading {
@@ -285,6 +295,10 @@ button:active {
   background: #22304a;
   color: #fff;
   display: none;
+  width: 100%;
+  max-width: 360px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #results.active {
@@ -314,6 +328,8 @@ button:active {
     margin: 0;
     border-radius: 0;
     box-shadow: none;
+    width: 100%;
+    max-width: 100%;
   }
 
   form {
@@ -336,6 +352,11 @@ button:active {
   input[type="text"],
   button {
     min-height: 44px;
+  }
+
+  #results, .result-card {
+    padding: 12px;
+    margin-top: 15px;
   }
 }
 
