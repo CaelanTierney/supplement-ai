@@ -2,10 +2,10 @@
   "name": "supplement-ai",
   "version": "1.0.0",
   "description": "Supplement AI backend Express server",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",

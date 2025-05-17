@@ -1,0 +1,42 @@
+console.log('Loaded openaiService');
+const openai = require('../config/openai');
+
+const getSupplementEvidence = async (supplement, outcome) => {
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-4-turbo",
+      messages: [
+        {
+          role: "system",
+          content: `You are an evidence-based nutrition expert specializing in supplement research. 
+          Your task is to provide information about supplements as if you're summarizing data from examine.com.
+          
+          For each query about a supplement and health outcome:
+          1. Focus primarily on whether there is human evidence to support the supplement for the specific outcome
+          2. Provide information on dosage and timing if available
+          3. Present information in a casual but scientifically accurate way
+          4. Be clear about the level of evidence (strong, moderate, preliminary, or insufficient)
+          5. Do not exaggerate benefits or downplay risks
+          6. Limit your response to 2-3 paragraphs
+          
+          If there's insufficient information, be honest about the limitations of current research.`
+        },
+        {
+          role: "user",
+          content: `What do you think of ${supplement} for ${outcome}? Please provide an evidence-based summary focused on human research data.`
+        }
+      ],
+      max_tokens: 800,
+      temperature: 0.7,
+    });
+
+    return response.choices[0].message.content;
+  } catch (error) {
+    console.error('Error in OpenAI service:', error);
+    throw new Error('Failed to get supplement information from AI');
+  }
+};
+
+module.exports = {
+  getSupplementEvidence
+};
