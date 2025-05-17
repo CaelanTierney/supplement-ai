@@ -71,33 +71,9 @@ router.post('/supplement', async (req, res) => {
   }
 
   try {
-    // Fuzzy match supplement and outcome with strict threshold
-    let correctedSupplement = supplement;
-    let correctionMsg = '';
-    const supplementMatch = didYouMean(supplement, SUPPLEMENTS, { returnType: 'all-matches', threshold: 0.4 });
-    if (supplementMatch && supplementMatch.length > 0) {
-      const bestMatch = supplementMatch[0];
-      const distance = levenshtein(supplement.toLowerCase(), bestMatch.toLowerCase());
-      if (distance <= 2) {
-        correctedSupplement = bestMatch;
-        if (correctedSupplement.toLowerCase() !== supplement.toLowerCase()) {
-          correctionMsg = `Auto-corrected to "${correctedSupplement}" for supplement.`;
-        }
-      } else if (bestMatch.toLowerCase() !== supplement.toLowerCase()) {
-        return res.status(400).json({ error: `Did you mean "${bestMatch}" for supplement? Please clarify your input for precision.` });
-      }
-    }
+    console.log('Processing request with:', { supplement, outcome });
 
-    // Fuzzy match outcome (less strict)
-    let correctedOutcome = outcome;
-    const outcomeMatch = didYouMean(outcome, OUTCOMES, { returnType: 'all-matches', threshold: 0.4 });
-    if (outcomeMatch && outcomeMatch.length > 0) {
-      correctedOutcome = outcomeMatch[0];
-    }
-
-    console.log('Processing request with:', { correctedSupplement, correctedOutcome });
-
-    const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${correctedSupplement} for ${correctedOutcome}?"
+    const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${supplement} for ${outcome}?"
 - Use a casual, friendly, but evidence-based tone, as if you're talking to a friend who wants the real, science-backed scoop (not hype).
 - Focus on whether there is human evidence to support the supplement for the specific outcome, and summarize what examine.com's Human Effects Matrix and recommendations say.
 - If there is no human evidence, say so clearly.
@@ -110,7 +86,7 @@ router.post('/supplement', async (req, res) => {
     const aiResponse = await openaiService.getCompletion(prompt);
     console.log('Received response from OpenAI');
     
-    res.json({ result: (correctionMsg ? correctionMsg + '<br>' : '') + aiResponse });
+    res.json({ result: aiResponse });
   } catch (error) {
     console.error('Error in /api/supplement:', error);
     

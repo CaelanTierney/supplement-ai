@@ -196,8 +196,6 @@ button:active {
     min-height: 100vh;
     height: auto;
     position: relative;
-    z-index: 1;
-    overflow-y: auto;
   }
   .container {
     margin: 24px auto;
@@ -206,8 +204,7 @@ button:active {
     max-width: 380px;
     box-sizing: border-box;
     position: relative;
-    z-index: 2;
-    background: rgba(255,255,255,0.04);
+    z-index: 1;
   }
   .result-card {
     padding: 16px 12px;
@@ -218,8 +215,6 @@ button:active {
     -moz-appearance: none;
     appearance: none;
     touch-action: manipulation;
-    position: relative;
-    z-index: 3;
   }
 }
 
