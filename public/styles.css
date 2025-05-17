@@ -36,12 +36,14 @@ h1 {
   margin-bottom: 8px;
   letter-spacing: 1px;
   color: #fefef1;
+  text-align: center;
 }
 
 .subtitle {
   font-size: 1.1em;
   margin-bottom: 24px;
   color: #fefef1;
+  text-align: center;
 }
 
 form {
