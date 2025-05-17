@@ -146,8 +146,11 @@ button:active {
   color: #fefef1;
   white-space: pre-wrap;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   max-height: 60vh;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .result-card {
@@ -159,11 +162,10 @@ button:active {
   font-size: 1.08em;
   line-height: 1.6;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   width: 100%;
-  max-width: 360px;
-  margin-left: auto;
-  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .fade-in {
@@ -260,11 +262,15 @@ button:active {
     margin-top: 15px;
     padding: 10px;
     max-height: 50vh;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .result-card {
     padding: 15px 12px;
     font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .subtitle {
