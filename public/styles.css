@@ -118,17 +118,15 @@ button:active {
 #result {
   margin-top: 20px;
   padding: 15px;
-  background: #f8f9fa;
-  border-radius: 5px;
+  color: #fefef1;
   white-space: pre-wrap;
 }
 
 .result-card {
-  background: #22304a;
+  background: transparent;
   border-radius: 8px;
   padding: 20px 16px;
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  color: #fefef1;
   text-align: left;
   font-size: 1.08em;
   line-height: 1.6;
@@ -310,6 +308,7 @@ button:active {
 .credit a {
   color: #fefef1;
   text-decoration: none;
+  font-weight: 700;
 }
 
 .credit a:hover {
