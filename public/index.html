@@ -18,10 +18,36 @@
   <div class="container">
     <h1>Supplement AI</h1>
     <p class="subtitle">Evidence-based supplement advice, focused on human data.</p>
-    <form id="supplement-form">
-      <input type="text" id="supplement" name="supplement" placeholder="Supplement Name" required autocomplete="off" />
-      <input type="text" id="outcome" name="outcome" placeholder="Health Outcome" required autocomplete="off" />
-      <button type="submit">Tell Me</button>
+    <form id="supplement-form" autocomplete="off">
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          id="supplement" 
+          name="supplement" 
+          placeholder="Supplement Name" 
+          required 
+          autocomplete="off"
+          inputmode="text"
+          enterkeyhint="next"
+          aria-label="Supplement Name"
+        />
+      </div>
+      <div class="input-wrapper">
+        <input 
+          type="text" 
+          id="outcome" 
+          name="outcome" 
+          placeholder="Health Outcome" 
+          required 
+          autocomplete="off"
+          inputmode="text"
+          enterkeyhint="search"
+          aria-label="Health Outcome"
+        />
+      </div>
+      <div class="button-wrapper">
+        <button type="submit" aria-label="Submit">Tell Me</button>
+      </div>
     </form>
     <div id="loading" style="display:none;">Loading...</div>
     <div id="result"></div>

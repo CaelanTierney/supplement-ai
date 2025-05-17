@@ -1,52 +1,33 @@
 html, body {
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  background: #f5f5f5;
   overflow-x: hidden;
-  overflow-y: auto;
   -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: #1a2942;
-  color: #fff;
-  font-family: 'Montserrat', Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.credit {
-  position: fixed;
-  bottom: 18px;
-  right: 32px;
-  font-size: 0.78em;
-  color: #b0b8c9;
-  letter-spacing: 0.01em;
-  z-index: 10;
-}
-
-.credit a {
-  color: #fff;
-  text-decoration: underline;
-  font-weight: 500;
-}
-
-.credit a:hover {
-  color: #2d6cdf;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .container {
-  background: rgba(255,255,255,0.04);
-  border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
-  padding: 32px 24px 24px 24px;
-  text-align: center;
   width: 100%;
   max-width: 420px;
   margin: 0 auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -64,65 +45,80 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 24px;
+  gap: 15px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.input-wrapper {
+  position: relative;
   width: 100%;
 }
 
 input[type="text"] {
   width: 100%;
-  padding: 12px;
-  border-radius: 6px;
-  border: none;
-  font-size: 1em;
-  background: #2d3e5e;
-  color: #fff;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
   box-sizing: border-box;
-  margin: 0;
+  -webkit-appearance: none;
+  appearance: none;
+  background: white;
+  position: relative;
+  z-index: 2;
+  touch-action: manipulation;
 }
 
-input[type="text"]::placeholder {
-  color: #b0b8c9;
+input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.button-wrapper {
+  position: relative;
+  width: 100%;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  border-radius: 6px;
+  padding: 12px 20px;
+  background: #007bff;
+  color: white;
   border: none;
-  background: #2d6cdf;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1em;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.3s;
   -webkit-appearance: none;
-  -moz-appearance: none;
   appearance: none;
-  margin-top: 12px;
+  position: relative;
+  z-index: 2;
+  touch-action: manipulation;
 }
 
 button:hover {
-  background: #1a4fa2;
+  background: #0056b3;
 }
 
 button:active {
-  background: #1a4fa2;
-  transform: translateY(1px);
+  background: #004085;
 }
 
 #loading {
-  margin: 16px 0;
-  font-size: 1.1em;
-  color: #c7d0e0;
+  text-align: center;
+  margin: 20px 0;
+  color: #666;
 }
 
 #result {
-  margin-top: 24px;
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 5px;
+  white-space: pre-wrap;
 }
 
 .result-card {
@@ -265,15 +261,56 @@ button:active {
 }
 
 @media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
   .container {
-    padding: 20px 16px;
+    padding: 15px;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
-  
+
+  form {
+    gap: 12px;
+  }
+
   input[type="text"] {
-    padding: 12px;
+    padding: 15px;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
   }
-  
+
   button {
-    padding: 12px;
+    padding: 15px;
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
   }
+
+  /* Ensure touch targets are at least 44x44px */
+  input[type="text"],
+  button {
+    min-height: 44px;
+  }
+}
+
+.credit {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
+  z-index: 1;
+}
+
+.credit a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.credit a:hover {
+  text-decoration: underline;
 } 
