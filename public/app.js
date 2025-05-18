@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     .result-card {
-      background: transparent;
+      background: rgba(45, 108, 223, 0.1);
       border-radius: 8px;
       padding: 20px 16px;
       color: #fefef1;
@@ -164,23 +164,42 @@ document.addEventListener('DOMContentLoaded', function () {
       -webkit-overflow-scrolling: touch;
       width: 100%;
       box-sizing: border-box;
+      border: 1px solid rgba(45, 108, 223, 0.2);
     }
     
     .result-card h2 {
       color: #fefef1;
+      margin-bottom: 1em;
     }
     
     .result-card h3 {
       color: #fefef1;
-      margin: 1em 0 0.5em 0;
+      margin: 1.5em 0 0.5em 0;
+      font-size: 1.1em;
+    }
+    
+    .result-card p {
+      color: #fefef1;
+      margin: 0.5em 0;
     }
     
     .result-card strong {
       color: #fefef1;
+      font-weight: 600;
     }
     
     .result-card em {
       color: #fefef1;
+      font-style: italic;
+    }
+    
+    #streaming-content {
+      color: #fefef1;
+      min-height: 100px;
+      background: rgba(45, 108, 223, 0.05);
+      padding: 15px;
+      border-radius: 6px;
+      margin-top: 1em;
     }
     
     .reset-btn {
