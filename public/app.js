@@ -79,10 +79,11 @@ document.addEventListener('DOMContentLoaded', function () {
       const supplement = document.getElementById('supplement').value.trim();
       const outcome = document.getElementById('outcome').value.trim();
       
-      // Show loading message
+      // Show loading message and animation
       loading.style.display = 'block';
       loading.textContent = 'Processing... this may take up to 20 seconds 😊';
       form.querySelector('button').disabled = true;
+      form.querySelector('.button-wrapper').classList.add('loading');
       
       try {
         const response = await fetch('/api/supplement', {
@@ -101,8 +102,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const data = await response.json();
         
-        // Hide loading message before showing result
+        // Hide loading message and animation
         loading.style.display = 'none';
+        form.querySelector('.button-wrapper').classList.remove('loading');
         
         // Create new container content with fade-in
         const newContent = `
@@ -248,12 +250,75 @@ document.addEventListener('DOMContentLoaded', function () {
       text-align: center;
       margin: 20px 0;
       font-size: 1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    #loading::after {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border: 2px solid #2d6cdf;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     form {
       width: 100%;
       max-width: 800px;
       margin: 0 auto;
+    }
+
+    .button-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .button-wrapper::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .button-wrapper.loading::after {
+      border-color: #FFD700;
+      animation: borderRotate 1.5s linear infinite;
+    }
+
+    @keyframes borderRotate {
+      0% {
+        clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+      }
+      25% {
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+      }
+      50% {
+        clip-path: polygon(100% 0, 100% 100%, 100% 100%, 100% 0);
+      }
+      75% {
+        clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+      }
+      100% {
+        clip-path: polygon(0 0, 0 100%, 0 100%, 0 0);
+      }
     }
   `;
   document.head.appendChild(style);
