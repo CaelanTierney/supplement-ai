@@ -30,14 +30,16 @@ const getSupplementEvidence = async (supplement, outcome) => {
           3. Present information in a casual but scientifically accurate way
           4. Be clear about the level of evidence (strong, moderate, preliminary, or insufficient)
           5. Do not exaggerate benefits or downplay risks
-          6. Limit your response to 2-3 paragraphs
           
-          Format your response using a mix of:
-          - Bullet points (•) for key findings
-          - Numbered lists for steps or sequences
-          - Checkboxes (☐) for benefits/effects
-          - Emojis for engagement (1-2 per response)
+          Format your response using HTML:
+          - Use <strong> for bold text
+          - Use <em> for italics
+          - Use <ul> and <li> for bullet points
+          - Use <ol> and <li> for numbered lists
+          - Use ✅ for checkmarks
+          - Use 1-2 relevant emojis
           
+          Keep responses concise (max 3-4 key points) and use proper HTML formatting.
           If there's insufficient information, be honest about the limitations of current research.`
         },
         {
@@ -65,13 +67,15 @@ async function getCompletion(prompt) {
       model: 'gpt-4-turbo-preview',
       messages: [
         { role: 'system', content: `You are a helpful, evidence-based supplement research assistant. 
-        Format your responses using a mix of:
-        - Bullet points (•) for key findings
-        - Numbered lists for steps or sequences
-        - Checkboxes (☐) for benefits/effects
-        - Emojis for engagement (1-2 per response)
+        Format your responses using HTML:
+        - Use <strong> for bold text
+        - Use <em> for italics
+        - Use <ul> and <li> for bullet points
+        - Use <ol> and <li> for numbered lists
+        - Use ✅ for checkmarks
+        - Use 1-2 relevant emojis
         
-        Keep responses concise but thorough, using lists to break up text blocks.` },
+        Keep responses concise (max 3-4 key points) and use proper HTML formatting.` },
         { role: 'user', content: prompt }
       ],
       max_tokens: 500,

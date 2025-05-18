@@ -74,19 +74,20 @@ router.post('/supplement', async (req, res) => {
     console.log('Processing request with:', { supplement, outcome });
 
     const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${supplement} for ${outcome}?"
-- Use a casual, friendly, but evidence-based tone, as if you're talking to a friend who wants the real, science-backed scoop (not hype).
-- Focus on whether there is human evidence to support the supplement for the specific outcome, and summarize what examine.com's Human Effects Matrix and recommendations say.
-- If there is no human evidence, say so clearly.
-- If there is evidence, summarize the strength, quality, and what examine.com suggests (including typical dosage, best forms, and populations, if available).
-- Reference examine.com's most recent research and recommendations.
+- Use a casual, friendly, but evidence-based tone
+- Focus on whether there is human evidence to support the supplement for the specific outcome
+- If there is no human evidence, say so clearly
+- If there is evidence, summarize the strength, quality, and what examine.com suggests
 
-Format your response using a mix of:
-• Bullet points for key findings
-• Numbered lists for steps or sequences
-☐ Checkboxes for benefits/effects
-• Emojis for engagement (1-2 per response)
+Format your response using HTML:
+- Use <strong> for bold text
+- Use <em> for italics
+- Use <ul> and <li> for bullet points
+- Use <ol> and <li> for numbered lists
+- Use ✅ for checkmarks
+- Use 1-2 relevant emojis
 
-Keep responses concise but thorough, using lists to break up text blocks.`;
+Keep responses concise (max 3-4 key points) and use proper HTML formatting.`;
 
     console.log('Sending request to OpenAI...');
     const aiResponse = await openaiService.getCompletion(prompt);
