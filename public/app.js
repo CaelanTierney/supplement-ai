@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
       // Show loading message
       loading.style.display = 'block';
-      loading.textContent = 'You got it! 😊';
+      loading.textContent = 'Processing... this may take up to 20 seconds 😊';
       form.querySelector('button').disabled = true;
       
       try {
