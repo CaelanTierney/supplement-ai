@@ -46,16 +46,13 @@ document.addEventListener('DOMContentLoaded', function () {
   function attachFormHandler() {
     const form = document.getElementById('supplement-form');
     const loading = document.getElementById('loading');
-    const result = document.getElementById('result');
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       const supplement = document.getElementById('supplement').value.trim();
       const outcome = document.getElementById('outcome').value.trim();
       
-      result.innerHTML = '';
-      loading.style.display = 'block';
-      loading.textContent = 'Processing… this may take up to 20 seconds 🙂';
-      form.querySelector('button').disabled = true;
+      // Start transition
+      container.classList.add('fade-out');
       
       try {
         const response = await fetch('/api/supplement', {
@@ -69,17 +66,20 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(error.error || 'Something went wrong');
         }
 
+        // Create new container content
+        container.innerHTML = `
+          <div id="result" class="fade-in">
+            <div class="result-card">
+              <h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>
+              <div id="streaming-content"></div>
+            </div>
+          </div>
+        `;
+        
+        const streamingContent = document.getElementById('streaming-content');
         const reader = response.body.getReader();
         const decoder = new TextDecoder();
         let accumulatedContent = '';
-        
-        // Create result container
-        const resultCard = document.createElement('div');
-        resultCard.className = 'result-card';
-        resultCard.innerHTML = `<h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>`;
-        result.appendChild(resultCard);
-        
-        loading.style.display = 'none';
         
         while (true) {
           const { value, done } = await reader.read();
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const { content } = JSON.parse(data);
                 if (content) {
                   accumulatedContent += content;
-                  resultCard.innerHTML = `<h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>${accumulatedContent}`;
+                  streamingContent.innerHTML = accumulatedContent;
                 }
               } catch (e) {
                 console.error('Error parsing SSE data:', e);
@@ -111,13 +111,18 @@ document.addEventListener('DOMContentLoaded', function () {
         resetBtn.className = 'reset-btn';
         resetBtn.textContent = 'Make Another Search';
         resetBtn.onclick = resetUI;
-        result.appendChild(resetBtn);
+        container.querySelector('#result').appendChild(resetBtn);
         
       } catch (err) {
         console.error('Fetch error:', err);
-        loading.style.display = 'none';
-        form.querySelector('button').disabled = false;
-        showResult(`<div class="result-card" style="color:#ffb4b4;">${err.message || 'Network error. Please check your connection and try again.'}</div>`);
+        container.innerHTML = `
+          <div id="result" class="fade-in">
+            <div class="result-card" style="color:#ffb4b4;">
+              ${err.message || 'Network error. Please check your connection and try again.'}
+            </div>
+            <button class="reset-btn" onclick="resetUI()">Try Again</button>
+          </div>
+        `;
       }
     });
   }
@@ -125,55 +130,55 @@ document.addEventListener('DOMContentLoaded', function () {
   // Add CSS for loading state transitions
   const style = document.createElement('style');
   style.textContent = `
-    .loading {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-      font-size: 1.2em;
-      color: #666;
-      text-align: center;
-      padding: 20px;
+    .container {
+      transition: opacity 0.3s ease;
     }
     
-    #result {
+    .fade-out {
+      opacity: 0;
+    }
+    
+    .fade-in {
       opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .result-card {
+      background: transparent;
+      border-radius: 8px;
+      padding: 20px 16px;
+      color: #fefef1;
+      text-align: left;
+      font-size: 1.08em;
+      line-height: 1.6;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .reset-btn {
+      margin: 24px auto 0 auto;
+      display: block;
+      padding: 12px 24px;
+      border-radius: 6px;
+      border: none;
+      background: #2d6cdf;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .reset-btn:hover {
+      background: #1a4fa2;
     }
     
     .error {
-      color: #dc3545;
+      color: #ffb4b4;
       text-align: center;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 4px;
-      background-color: #f8d7da;
-      border: 1px solid #f5c6cb;
-    }
-
-    .fade-out {
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .fade-in {
-      opacity: 1;
-      transition: opacity 0.3s ease;
-    }
-
-    .reset-btn {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .reset-btn:hover {
-      background-color: #0056b3;
+      padding: 20px;
     }
   `;
   document.head.appendChild(style);
