@@ -71,6 +71,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const data = await response.json();
         
+        // Hide loading message before showing result
+        loading.style.display = 'none';
+        
         // Create new container content with fade-in
         container.classList.add('fade-out');
         setTimeout(() => {
