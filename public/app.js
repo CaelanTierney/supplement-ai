@@ -79,11 +79,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const supplement = document.getElementById('supplement').value.trim();
       const outcome = document.getElementById('outcome').value.trim();
       
-      // Show loading message and animation
+      // Show loading message
       loading.style.display = 'block';
       loading.textContent = 'Processing... this may take up to 20 seconds 😊';
       form.querySelector('button').disabled = true;
-      form.querySelector('.button-wrapper').classList.add('loading');
       
       try {
         const response = await fetch('/api/supplement', {
@@ -102,9 +101,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
         const data = await response.json();
         
-        // Hide loading message and animation
+        // Hide loading message
         loading.style.display = 'none';
-        form.querySelector('.button-wrapper').classList.remove('loading');
+        form.querySelector('button').disabled = false;
         
         // Create new container content with fade-in
         const newContent = `
@@ -250,26 +249,6 @@ document.addEventListener('DOMContentLoaded', function () {
       text-align: center;
       margin: 20px 0;
       font-size: 1em;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    #loading::after {
-      content: '';
-      width: 20px;
-      height: 20px;
-      border: 2px solid #2d6cdf;
-      border-radius: 50%;
-      border-top-color: transparent;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
     }
 
     form {
