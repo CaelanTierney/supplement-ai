@@ -105,21 +105,21 @@ document.addEventListener('DOMContentLoaded', function () {
         loading.style.display = 'none';
         
         // Create new container content with fade-in
-        container.classList.add('fade-out');
-        setTimeout(() => {
-          container.innerHTML = `
-            <div class="result-card fade-in">
-              <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
-              <div class="streaming-content">${data.content}</div>
-              <button class="reset-btn">Make Another Search</button>
-            </div>
-          `;
-          container.classList.remove('fade-out');
-          container.classList.add('fade-in');
-          
-          // Add click handler for reset button
-          container.querySelector('.reset-btn').onclick = resetUI;
-        }, 300);
+        const newContent = `
+          <div class="result-card fade-in">
+            <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
+            <div class="streaming-content">${data.content}</div>
+            <button class="reset-btn">Make Another Search</button>
+          </div>
+        `;
+        
+        // Update content without triggering a full reset
+        container.innerHTML = newContent;
+        container.classList.remove('fade-out');
+        container.classList.add('fade-in');
+        
+        // Add click handler for reset button
+        container.querySelector('.reset-btn').onclick = resetUI;
         
       } catch (err) {
         console.error('Fetch error:', err);
