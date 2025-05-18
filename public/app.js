@@ -26,23 +26,19 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function resetUI() {
-    container.classList.add('fade-out');
-    setTimeout(() => {
-      container.innerHTML = `
-        <h1>Supplement AI</h1>
-        <p class="subtitle">Evidence-based supplement advice, focused on human data.</p>
-        <form id="supplement-form">
-          <input type="text" id="supplement" name="supplement" placeholder="Supplement Name" required />
-          <input type="text" id="outcome" name="outcome" placeholder="Health Outcome" required />
-          <button type="submit">Tell Me</button>
-        </form>
-        <div id="loading" style="display:none;">Loading...</div>
-        <div id="result"></div>
-      `;
-      container.classList.remove('fade-out');
-      container.classList.add('fade-in');
-      attachFormHandler();
-    }, 300);
+    container.innerHTML = `
+      <h1>Supplement AI</h1>
+      <p class="subtitle">Evidence-based supplement advice, focused on human data.</p>
+      <form id="supplement-form">
+        <input type="text" id="supplement" name="supplement" placeholder="Supplement Name" required />
+        <input type="text" id="outcome" name="outcome" placeholder="Health Outcome" required />
+        <button type="submit">Tell Me</button>
+      </form>
+      <div id="loading" style="display:none;">Loading...</div>
+      <div id="result"></div>
+    `;
+    container.classList.add('fade-in');
+    attachFormHandler();
   }
 
   function attachFormHandler() {
@@ -189,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
     #streaming-content {
       color: #fefef1;
       min-height: 100px;
-      background: rgba(45, 108, 223, 0.05);
+      background: rgba(45, 108, 223, 0.1);
       padding: 15px;
       border-radius: 6px;
       margin-top: 1em;
