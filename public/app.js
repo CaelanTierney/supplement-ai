@@ -26,19 +26,49 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function resetUI() {
-    container.innerHTML = `
-      <h1>Supplement AI</h1>
-      <p class="subtitle">Evidence-based supplement advice, focused on human data.</p>
-      <form id="supplement-form">
-        <input type="text" id="supplement" name="supplement" placeholder="Supplement Name" required />
-        <input type="text" id="outcome" name="outcome" placeholder="Health Outcome" required />
-        <button type="submit">Tell Me</button>
-      </form>
-      <div id="loading" style="display:none;">Loading...</div>
-      <div id="result"></div>
-    `;
-    container.classList.add('fade-in');
-    attachFormHandler();
+    container.classList.add('fade-out');
+    setTimeout(() => {
+      container.innerHTML = `
+        <h1>Supplement AI</h1>
+        <p class="subtitle">Evidence-based supplement advice, focused on human data.</p>
+        <form id="supplement-form" autocomplete="off">
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="supplement" 
+              name="supplement" 
+              placeholder="Supplement Name" 
+              required 
+              autocomplete="off"
+              inputmode="text"
+              enterkeyhint="next"
+              aria-label="Supplement Name"
+            />
+          </div>
+          <div class="input-wrapper">
+            <input 
+              type="text" 
+              id="outcome" 
+              name="outcome" 
+              placeholder="Health Outcome" 
+              required 
+              autocomplete="off"
+              inputmode="text"
+              enterkeyhint="search"
+              aria-label="Health Outcome"
+            />
+          </div>
+          <div class="button-wrapper">
+            <button type="submit" aria-label="Submit">Tell Me</button>
+          </div>
+        </form>
+        <div id="loading" style="display:none;">Loading...</div>
+        <div id="result"></div>
+      `;
+      container.classList.remove('fade-out');
+      container.classList.add('fade-in');
+      attachFormHandler();
+    }, 300);
   }
 
   function attachFormHandler() {
@@ -125,9 +155,6 @@ document.addEventListener('DOMContentLoaded', function () {
       text-align: left;
       font-size: 1.08em;
       line-height: 1.6;
-      overflow-y: auto;
-      overflow-x: hidden;
-      -webkit-overflow-scrolling: touch;
       width: 100%;
       box-sizing: border-box;
       border: 1px solid rgba(35, 49, 73, 0.2);
@@ -169,8 +196,6 @@ document.addEventListener('DOMContentLoaded', function () {
       display: block;
       width: 100%;
       box-sizing: border-box;
-      overflow-y: auto;
-      max-height: 70vh;
     }
     
     .reset-btn {
