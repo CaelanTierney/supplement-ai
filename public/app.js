@@ -135,13 +135,15 @@ document.addEventListener('DOMContentLoaded', function () {
   style.textContent = `
     .container {
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       padding: 20px;
       box-sizing: border-box;
       position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
     }
     
     .fade-out {
@@ -163,11 +165,9 @@ document.addEventListener('DOMContentLoaded', function () {
       font-size: 1.08em;
       line-height: 1.6;
       width: 100%;
-      max-width: 800px;
-      margin: 0 auto;
       box-sizing: border-box;
       border: 1px solid rgba(35, 49, 73, 0.2);
-      max-height: 80vh;
+      max-height: 70vh;
       overflow-y: auto;
       transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -248,6 +248,12 @@ document.addEventListener('DOMContentLoaded', function () {
       text-align: center;
       margin: 20px 0;
       font-size: 1em;
+    }
+
+    form {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
     }
   `;
   document.head.appendChild(style);
