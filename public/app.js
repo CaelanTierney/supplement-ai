@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       container.classList.remove('fade-out');
       container.classList.add('fade-in');
       document.getElementById('reset-btn').onclick = resetUI;
-    }, 50);
+    }, 300);
   }
 
   function showError(message) {
@@ -26,10 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function resetUI() {
-    // Start fade out transition
     container.classList.add('fade-out');
-    
-    // Wait for fade out to complete before changing content
     setTimeout(() => {
       container.innerHTML = `
         <h1>Supplement AI</h1>
@@ -42,11 +39,10 @@ document.addEventListener('DOMContentLoaded', function () {
         <div id="loading" style="display:none;">Loading...</div>
         <div id="result"></div>
       `;
-      // Remove fade-out and add fade-in for smooth transition
       container.classList.remove('fade-out');
       container.classList.add('fade-in');
       attachFormHandler();
-    }, 300); // Match the transition duration
+    }, 300);
   }
 
   function attachFormHandler() {
@@ -224,6 +220,13 @@ document.addEventListener('DOMContentLoaded', function () {
       color: #ffb4b4;
       text-align: center;
       padding: 20px;
+    }
+
+    #loading {
+      color: #fefef1;
+      text-align: center;
+      margin: 20px 0;
+      font-size: 1.2em;
     }
   `;
   document.head.appendChild(style);
