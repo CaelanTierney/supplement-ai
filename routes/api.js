@@ -115,7 +115,7 @@ Keep responses thorough but concise.`;
     const aiResponse = await Promise.race([
       openaiService.getCompletion(prompt),
       new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Request timed out')), 7000)
+        setTimeout(() => reject(new Error('Request timed out')), 3000)
       )
     ]);
     console.log('Received response from OpenAI');
