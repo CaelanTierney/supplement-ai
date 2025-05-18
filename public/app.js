@@ -134,21 +134,24 @@ document.addEventListener('DOMContentLoaded', function () {
   const style = document.createElement('style');
   style.textContent = `
     .container {
-      transition: opacity 0.3s ease;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 20px;
       box-sizing: border-box;
+      position: relative;
     }
     
     .fade-out {
       opacity: 0;
+      transform: translateY(20px);
     }
     
     .fade-in {
       opacity: 1;
+      transform: translateY(0);
     }
     
     .result-card {
@@ -166,7 +169,15 @@ document.addEventListener('DOMContentLoaded', function () {
       border: 1px solid rgba(35, 49, 73, 0.2);
       max-height: 80vh;
       overflow-y: auto;
-      transition: opacity 0.3s ease;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .result-card.fade-in {
+      transform: translateY(0);
+    }
+    
+    .result-card.fade-out {
+      transform: translateY(20px);
     }
     
     .result-card h2 {
