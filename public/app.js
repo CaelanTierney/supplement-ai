@@ -72,12 +72,12 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(error.error || 'Something went wrong');
         }
 
-        // Create new container content
+        // Create new container content with initial message
         container.innerHTML = `
           <div id="result" class="fade-in">
             <div class="result-card">
-              <h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>
-              <div id="streaming-content">You got it! 😊</div>
+              <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
+              <div id="streaming-content" style="color:#fefef1;min-height:50px;">You got it! 😊</div>
             </div>
           </div>
         `;
@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (content) {
                   accumulatedContent += content;
                   streamingContent.innerHTML = accumulatedContent;
+                  // Ensure content is visible
+                  streamingContent.style.color = '#fefef1';
                 }
               } catch (e) {
                 console.error('Error parsing SSE data:', e);
@@ -164,6 +166,23 @@ document.addEventListener('DOMContentLoaded', function () {
       -webkit-overflow-scrolling: touch;
       width: 100%;
       box-sizing: border-box;
+    }
+    
+    .result-card h2 {
+      color: #fefef1;
+    }
+    
+    .result-card h3 {
+      color: #fefef1;
+      margin: 1em 0 0.5em 0;
+    }
+    
+    .result-card strong {
+      color: #fefef1;
+    }
+    
+    .result-card em {
+      color: #fefef1;
     }
     
     .reset-btn {
