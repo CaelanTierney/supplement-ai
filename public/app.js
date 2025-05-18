@@ -80,17 +80,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
                 <div class="streaming-content">${data.content}</div>
               </div>
+              <button class="reset-btn">Make Another Search</button>
             </div>
           `;
           container.classList.remove('fade-out');
           container.classList.add('fade-in');
           
-          // Add reset button
-          const resetBtn = document.createElement('button');
-          resetBtn.className = 'reset-btn';
-          resetBtn.textContent = 'Make Another Search';
-          resetBtn.onclick = resetUI;
-          container.querySelector('#result').appendChild(resetBtn);
+          // Add click handler for reset button
+          container.querySelector('.reset-btn').onclick = resetUI;
         }, 300);
         
       } catch (err) {
