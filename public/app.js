@@ -26,7 +26,10 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function resetUI() {
-    container.classList.remove('fade-in');
+    // Start fade out transition
+    container.classList.add('fade-out');
+    
+    // Wait for fade out to complete before changing content
     setTimeout(() => {
       container.innerHTML = `
         <h1>Supplement AI</h1>
@@ -39,8 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
         <div id="loading" style="display:none;">Loading...</div>
         <div id="result"></div>
       `;
+      // Remove fade-out and add fade-in for smooth transition
+      container.classList.remove('fade-out');
+      container.classList.add('fade-in');
       attachFormHandler();
-    }, 50);
+    }, 300); // Match the transition duration
   }
 
   function attachFormHandler() {
