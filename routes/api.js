@@ -78,7 +78,7 @@ router.post('/supplement', async (req, res) => {
 For each supplement–outcome pairing, use this structure:
 1. Start with a casual, friendly intro (1-2 sentences, no heading) followed by a relevant emoji
 2. <h3>How it works</h3> – brief mechanism (keep it casual and easy to understand)
-3. <h3>Human evidence</h3> – key trials & strength (strong, moderate, preliminary, insufficient)
+3. <h3>Human evidence</h3> – key trials & strength (<strong>strong</strong>, <strong>moderate</strong>, <strong>preliminary</strong>, or <strong>insufficient</strong>)
 4. <h3>Dosage & timing</h3> – recommended dose range and when to take
 5. <h3>Best form</h3> – powder, capsule, liposomal, etc.
 6. <h3>Safety</h3> – known side effects or interactions
@@ -87,12 +87,13 @@ For each supplement–outcome pairing, use this structure:
 
 Format your response using HTML:
 - Use <h3> for main headings
-- Use <strong> for emphasis
+- Use <strong> for emphasis and evidence strength ratings
 - Use <em> for italics
 - Use ✅ for checkmarks where appropriate
 - Write in clear, concise paragraphs
 - Keep paragraphs short and focused
 - Use a casual, friendly tone throughout
+- NEVER use markdown-style formatting (like **bold** or *italic*)
 
 Spacing rules:
 - Use exactly ONE line break between major sections
