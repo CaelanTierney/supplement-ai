@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     #loading {
-      color: #fefef1;
+      color: #666;
       text-align: center;
       margin: 20px 0;
       font-size: 1.2em;
