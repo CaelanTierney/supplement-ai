@@ -122,6 +122,7 @@ Keep responses thorough but concise—no fluff, just clear, accurate, consumer-f
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
     res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('X-Accel-Buffering', 'no'); // Disable proxy buffering
     
     const stream = await openaiService.getCompletion(prompt, true);
     
@@ -130,7 +131,9 @@ Keep responses thorough but concise—no fluff, just clear, accurate, consumer-f
       if (content) {
         res.write(`data: ${JSON.stringify({ content })}\n\n`);
         // Flush the response to ensure immediate delivery
-        res.flushHeaders();
+        if (res.flushHeaders) {
+          res.flushHeaders();
+        }
       }
     }
     

@@ -108,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   streamingContent.innerHTML = accumulatedContent;
                   streamingContent.style.display = 'block';
                   streamingContent.scrollTop = streamingContent.scrollHeight;
+                  // Force a reflow to ensure content is visible
+                  streamingContent.offsetHeight;
                 }
               } catch (e) {
                 console.error('Error parsing SSE data:', e);
