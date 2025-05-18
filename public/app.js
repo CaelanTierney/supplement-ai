@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
       
       result.innerHTML = '';
       loading.style.display = 'block';
+      loading.textContent = 'Loading...';
       form.querySelector('button').disabled = true;
       
       try {
