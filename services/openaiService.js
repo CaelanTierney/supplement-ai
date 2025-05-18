@@ -32,7 +32,7 @@ const getSupplementEvidence = async (supplement, outcome) => {
           5. Do not exaggerate benefits or downplay risks
           
           Structure your response in this order:
-          1. Brief introduction (1-2 sentences)
+          1. Start with a casual, engaging intro (1-2 sentences, no heading)
           2. Evidence summary with headings and subheadings
           3. Key findings in bullet points
           4. Practical recommendations if applicable
@@ -48,10 +48,10 @@ const getSupplementEvidence = async (supplement, outcome) => {
           - Use ✅ for checkmarks
           
           Spacing rules:
-          - One blank line between sections
+          - No extra spacing between sections
           - No extra spacing between list items
-          - One blank line before and after lists
-          - One blank line before and after headings
+          - No extra spacing before or after headings
+          - Keep everything compact and easy to read
           
           Always end with:
           <h3>Summary</h3>
@@ -93,7 +93,7 @@ async function getCompletion(prompt) {
         5. Be honest about benefits and risks
         
         Structure your response in this order:
-        1. Brief introduction (1-2 sentences)
+        1. Start with a casual, engaging intro (1-2 sentences, no heading)
         2. Evidence summary with headings and subheadings
         3. Key findings in bullet points
         4. Practical recommendations if applicable
@@ -109,10 +109,10 @@ async function getCompletion(prompt) {
         - Use ✅ for checkmarks
         
         Spacing rules:
-        - One blank line between sections
+        - No extra spacing between sections
         - No extra spacing between list items
-        - One blank line before and after lists
-        - One blank line before and after headings
+        - No extra spacing before or after headings
+        - Keep everything compact and easy to read
         
         Always end with:
         <h3>Summary</h3>
