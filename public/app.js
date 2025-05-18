@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
       color: #666;
       text-align: center;
       margin: 20px 0;
-      font-size: 1.2em;
+      font-size: 1em;
     }
   `;
   document.head.appendChild(style);
