@@ -10,8 +10,8 @@ if (!process.env.OPENAI_API_KEY) {
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-  maxRetries: 0,
-  timeout: 3000
+  maxRetries: 1,
+  timeout: 30000
 });
 
 const getSupplementEvidence = async (supplement, outcome) => {
@@ -28,19 +28,13 @@ const getSupplementEvidence = async (supplement, outcome) => {
           content: `What do you think of ${supplement} for ${outcome}?`
         }
       ],
-      max_tokens: 250,
+      max_tokens: 400,
       temperature: 0.1,
       presence_penalty: 0,
-      frequency_penalty: 0,
-      stream: true
+      frequency_penalty: 0
     });
 
-    let fullResponse = '';
-    for await (const chunk of response) {
-      const content = chunk.choices[0]?.delta?.content || '';
-      fullResponse += content;
-    }
-    return fullResponse;
+    return response.choices[0].message.content;
   } catch (error) {
     console.error('Error in OpenAI service:', error);
     throw new Error('Failed to get supplement information from AI');
@@ -56,25 +50,18 @@ async function getCompletion(prompt) {
         { role: 'system', content: `Evidence-based supplement expert. Focus on human research, dosage, forms, timing. Be casual but accurate. State evidence level. Be honest about benefits/risks.` },
         { role: 'user', content: prompt }
       ],
-      max_tokens: 250,
+      max_tokens: 400,
       temperature: 0.1,
       presence_penalty: 0,
-      frequency_penalty: 0,
-      stream: true
+      frequency_penalty: 0
     });
 
-    let fullResponse = '';
-    for await (const chunk of response) {
-      const content = chunk.choices[0]?.delta?.content || '';
-      fullResponse += content;
-    }
-
-    if (!fullResponse) {
+    if (!response.choices?.[0]?.message?.content) {
       throw new Error('Invalid response from OpenAI');
     }
 
     console.log('Successfully received response from OpenAI');
-    return fullResponse;
+    return response.choices[0].message.content;
   } catch (error) {
     console.error('OpenAI API error:', error);
     

@@ -43,75 +43,43 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 50);
   }
 
-  async function handleSubmit(event) {
-    event.preventDefault();
-    
-    const supplement = document.getElementById('supplement').value.trim();
-    const outcome = document.getElementById('outcome').value.trim();
-    
-    if (!supplement || !outcome) {
-      showError('Please enter both a supplement and a health outcome.');
-      return;
-    }
-    
-    try {
-      // Show initial loading state
-      const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = '<div class="loading">Loading...</div>';
-      resultDiv.style.display = 'block';
-      
-      // After 3 seconds, show the longer wait message
-      const loadingTimeout = setTimeout(() => {
-        const loadingDiv = resultDiv.querySelector('.loading');
-        if (loadingDiv) {
-          loadingDiv.style.opacity = '0';
-          setTimeout(() => {
-            loadingDiv.innerHTML = 'Please wait up to 10 seconds 🙂';
-            loadingDiv.style.opacity = '1';
-            loadingDiv.style.transform = 'translateY(0)';
-          }, 300);
-        }
-      }, 3000);
-      
-      const response = await fetch('/api/supplement', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ supplement, outcome }),
-      });
-      
-      clearTimeout(loadingTimeout);
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to get supplement information');
-      }
-      
-      const data = await response.json();
-      
-      // Clear loading state with fade out
-      const loadingDiv = resultDiv.querySelector('.loading');
-      if (loadingDiv) {
-        loadingDiv.style.opacity = '0';
-        setTimeout(() => {
-          loadingDiv.remove();
-        }, 300);
-      }
-      
-      // Add the result with a fade in and rise animation
-      showResult(`<div class="result-card"><h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>${data.result}</div>`);
-      
-    } catch (error) {
-      showError(error.message);
-    }
-  }
-
   function attachFormHandler() {
     const form = document.getElementById('supplement-form');
-    if (form) {
-      form.addEventListener('submit', handleSubmit);
-    }
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const supplement = document.getElementById('supplement').value.trim();
+      const outcome = document.getElementById('outcome').value.trim();
+      
+      result.innerHTML = '';
+      loading.style.display = 'block';
+      form.querySelector('button').disabled = true;
+      
+      try {
+        const res = await fetch('/api/supplement', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ supplement, outcome })
+        });
+        
+        const data = await res.json();
+        loading.style.display = 'none';
+        
+        if (res.ok && data.result) {
+          showResult(`<div class="result-card"><h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>${data.result}</div>`);
+        } else if (data.error) {
+          showResult(`<div class="result-card" style="color:#ffb4b4;">${data.error}</div>`);
+        } else {
+          showResult(`<div class="result-card" style="color:#ffb4b4;">Sorry, something went wrong.</div>`);
+        }
+      } catch (err) {
+        console.error('Fetch error:', err);
+        loading.style.display = 'none';
+        form.querySelector('button').disabled = false;
+        showResult(`<div class="result-card" style="color:#ffb4b4;">Network error. Please check your connection and try again.</div>`);
+      }
+    });
   }
 
   // Add CSS for loading state transitions
