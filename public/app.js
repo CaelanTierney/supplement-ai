@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <div id="result" class="fade-in">
               <div class="result-card">
                 <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
-                <div id="streaming-content" style="color:#fefef1;"></div>
+                <div id="streaming-content"></div>
               </div>
             </div>
           `;
@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     .result-card {
-      background: rgba(45, 108, 223, 0.1);
+      background: #233149;
       border-radius: 8px;
       padding: 20px 16px;
       color: #fefef1;
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function () {
       -webkit-overflow-scrolling: touch;
       width: 100%;
       box-sizing: border-box;
-      border: 1px solid rgba(45, 108, 223, 0.2);
+      border: 1px solid rgba(35, 49, 73, 0.2);
     }
     
     .result-card h2 {
