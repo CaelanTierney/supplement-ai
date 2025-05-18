@@ -99,10 +99,12 @@ Format your response using HTML:
 - Use ✅ for checkmarks
 
 Spacing rules:
-- No extra spacing between sections
-- No extra spacing between list items
-- No extra spacing before or after headings
-- Keep everything compact and easy to read
+- Use exactly ONE line break between major sections
+- Use exactly ONE line break between headings and their content
+- NO extra line breaks between list items
+- NO extra line breaks within paragraphs
+- Keep everything compact but readable
+- Maintain consistent single-line spacing throughout
 
 Always end with:
 <h3>Summary</h3>
