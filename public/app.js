@@ -70,14 +70,19 @@ document.addEventListener('DOMContentLoaded', function () {
         await new Promise(resolve => setTimeout(resolve, 750));
         
         // Create new container content with fade-in
-        container.innerHTML = `
-          <div id="result" class="fade-in">
-            <div class="result-card">
-              <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
-              <div id="streaming-content" style="color:#fefef1;"></div>
+        container.classList.add('fade-out');
+        setTimeout(() => {
+          container.innerHTML = `
+            <div id="result" class="fade-in">
+              <div class="result-card">
+                <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
+                <div id="streaming-content" style="color:#fefef1;"></div>
+              </div>
             </div>
-          </div>
-        `;
+          `;
+          container.classList.remove('fade-out');
+          container.classList.add('fade-in');
+        }, 300);
         
         const streamingContent = document.getElementById('streaming-content');
         const reader = response.body.getReader();
@@ -189,6 +194,8 @@ document.addEventListener('DOMContentLoaded', function () {
       padding: 15px;
       border-radius: 6px;
       margin-top: 1em;
+      width: 100%;
+      box-sizing: border-box;
     }
     
     .reset-btn {
