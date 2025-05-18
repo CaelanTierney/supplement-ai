@@ -78,7 +78,7 @@ router.post('/supplement', async (req, res) => {
 - Focus on whether there is human evidence to support the supplement for the specific outcome, and summarize what examine.com's Human Effects Matrix and recommendations say.
 - If there is no human evidence, say so clearly.
 - If there is evidence, summarize the strength, quality, and what examine.com suggests (including typical dosage, best forms, and populations, if available).
-- Always mention the latest update date for the examine.com page (if available).
+- Reference examine.com's most recent research and recommendations.
 - Use 1–2 relevant emojis for engagement.
 - Be concise but thorough.`;
 

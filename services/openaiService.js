@@ -17,7 +17,7 @@ const openai = new OpenAI({
 const getSupplementEvidence = async (supplement, outcome) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-turbo-preview",
       messages: [
         {
           role: "system",
@@ -54,7 +54,7 @@ async function getCompletion(prompt) {
   try {
     console.log('Making OpenAI API request...');
     const response = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4-turbo-preview',
       messages: [
         { role: 'system', content: 'You are a helpful, evidence-based supplement research assistant.' },
         { role: 'user', content: prompt }
