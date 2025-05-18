@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     container.classList.add('fade-out');
     setTimeout(() => {
       container.innerHTML = `
-        <div id="result" class="fade-in">
+        <div class="result-card fade-in">
           ${html}
           <button id="reset-btn" class="reset-btn">Make Another Search</button>
         </div>
@@ -108,11 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
         container.classList.add('fade-out');
         setTimeout(() => {
           container.innerHTML = `
-            <div id="result" class="fade-in">
-              <div class="result-card">
-                <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
-                <div class="streaming-content">${data.content}</div>
-              </div>
+            <div class="result-card fade-in">
+              <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
+              <div class="streaming-content">${data.content}</div>
               <button class="reset-btn">Make Another Search</button>
             </div>
           `;
@@ -127,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Fetch error:', err);
         loading.style.display = 'none';
         form.querySelector('button').disabled = false;
-        showResult(`<div class="result-card" style="color:#ffb4b4;">${err.message || 'Network error. Please check your connection and try again.'}</div>`);
+        showResult(`<div style="color:#ffb4b4;">${err.message || 'Network error. Please check your connection and try again.'}</div>`);
       }
     });
   }
@@ -158,6 +156,8 @@ document.addEventListener('DOMContentLoaded', function () {
       width: 100%;
       box-sizing: border-box;
       border: 1px solid rgba(35, 49, 73, 0.2);
+      max-height: 80vh;
+      overflow-y: auto;
     }
     
     .result-card h2 {
