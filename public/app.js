@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
           `;
           container.classList.remove('fade-out');
           container.classList.add('fade-in');
-        }, 300);
+        }, 500);
         
         const streamingContent = document.getElementById('streaming-content');
         const reader = response.body.getReader();
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const style = document.createElement('style');
   style.textContent = `
     .container {
-      transition: opacity 0.3s ease;
+      transition: opacity 0.5s ease;
     }
     
     .fade-out {
@@ -190,12 +190,10 @@ document.addEventListener('DOMContentLoaded', function () {
     #streaming-content {
       color: #fefef1;
       min-height: 100px;
-      background: rgba(45, 108, 223, 0.1);
+      background: #233149;
       padding: 15px;
       border-radius: 6px;
       margin-top: 1em;
-      width: 100%;
-      box-sizing: border-box;
     }
     
     .reset-btn {
