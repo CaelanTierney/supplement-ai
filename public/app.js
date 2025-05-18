@@ -258,7 +258,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     .button-wrapper {
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .button-wrapper::after {
