@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <div id="result" class="fade-in">
             <div class="result-card">
               <h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>
-              <div id="streaming-content"></div>
+              <div id="streaming-content">You got it! 😊</div>
             </div>
           </div>
         `;
