@@ -11,7 +11,7 @@ if (!process.env.OPENAI_API_KEY) {
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
   maxRetries: 1,
-  timeout: 8000
+  timeout: 5000
 });
 
 const getSupplementEvidence = async (supplement, outcome) => {
@@ -65,8 +65,8 @@ const getSupplementEvidence = async (supplement, outcome) => {
           content: `What do you think of ${supplement} for ${outcome}? Please provide an evidence-based summary focused on human research data.`
         }
       ],
-      max_tokens: 400,
-      temperature: 0.3,
+      max_tokens: 350,
+      temperature: 0.2,
       presence_penalty: 0,
       frequency_penalty: 0
     });
@@ -122,8 +122,8 @@ async function getCompletion(prompt) {
         Keep responses thorough but concise.` },
         { role: 'user', content: prompt }
       ],
-      max_tokens: 400,
-      temperature: 0.3,
+      max_tokens: 350,
+      temperature: 0.2,
       presence_penalty: 0,
       frequency_penalty: 0
     });
