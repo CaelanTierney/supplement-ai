@@ -19,6 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 50);
   }
 
+  function showError(message) {
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `<div class="error">${message}</div>`;
+    resultDiv.style.display = 'block';
+  }
+
   function resetUI() {
     container.classList.remove('fade-in');
     setTimeout(() => {
@@ -94,13 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       
       // Add the result with a fade in and rise animation
-      resultDiv.innerHTML = data.result;
-      resultDiv.style.opacity = '0';
-      resultDiv.style.transform = 'translateY(20px)';
-      setTimeout(() => {
-        resultDiv.style.opacity = '1';
-        resultDiv.style.transform = 'translateY(0)';
-      }, 50);
+      showResult(`<div class="result-card"><h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>${data.result}</div>`);
       
     } catch (error) {
       showError(error.message);
@@ -109,9 +109,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function attachFormHandler() {
     const form = document.getElementById('supplement-form');
-    const loading = document.getElementById('loading');
-    const result = document.getElementById('result');
-    form.addEventListener('submit', handleSubmit);
+    if (form) {
+      form.addEventListener('submit', handleSubmit);
+    }
   }
 
   // Add CSS for loading state transitions
@@ -141,6 +141,31 @@ document.addEventListener('DOMContentLoaded', function () {
       border-radius: 4px;
       background-color: #f8d7da;
       border: 1px solid #f5c6cb;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .fade-in {
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .reset-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .reset-btn:hover {
+      background-color: #0056b3;
     }
   `;
   document.head.appendChild(style);
