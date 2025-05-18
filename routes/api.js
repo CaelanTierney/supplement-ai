@@ -74,20 +74,42 @@ router.post('/supplement', async (req, res) => {
     console.log('Processing request with:', { supplement, outcome });
 
     const prompt = `You are an evidence-based nutrition expert specializing in supplement research. For the query: "What do you think of ${supplement} for ${outcome}?"
-- Use a casual, friendly, but evidence-based tone
-- Focus on whether there is human evidence to support the supplement for the specific outcome
-- If there is no human evidence, say so clearly
-- If there is evidence, summarize the strength, quality, and what examine.com suggests
+
+For each query about a supplement and health outcome:
+1. Focus primarily on whether there is human evidence to support the supplement for the specific outcome
+2. Provide information on dosage, best forms, timing if available
+3. Present information in a casual but scientifically accurate way
+4. Be clear about the level of evidence (strong, moderate, preliminary, or insufficient)
+5. Do not exaggerate benefits or downplay risks
+
+Structure your response in this order:
+1. Brief introduction (1-2 sentences)
+2. Evidence summary with headings and subheadings
+3. Key findings in bullet points
+4. Practical recommendations if applicable
+5. Summary with emoji
 
 Format your response using HTML:
-- Use <strong> for bold text
+- Use <h3> for main headings
+- Use <h4> for subheadings
+- Use <strong> for emphasis
 - Use <em> for italics
 - Use <ul> and <li> for bullet points
 - Use <ol> and <li> for numbered lists
 - Use ✅ for checkmarks
-- Use 1-2 relevant emojis
 
-Keep responses concise (max 3-4 key points) and use proper HTML formatting.`;
+Spacing rules:
+- One blank line between sections
+- No extra spacing between list items
+- One blank line before and after lists
+- One blank line before and after headings
+
+Always end with:
+<h3>Summary</h3>
+A brief 1-2 sentence summary of the key findings
+Followed by a single, relevant emoji that captures the overall sentiment
+
+Keep responses thorough but concise.`;
 
     console.log('Sending request to OpenAI...');
     const aiResponse = await openaiService.getCompletion(prompt);
