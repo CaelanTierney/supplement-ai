@@ -57,8 +57,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const supplement = document.getElementById('supplement').value.trim();
       const outcome = document.getElementById('outcome').value.trim();
       
-      // Start transition
-      container.classList.add('fade-out');
+      // Show loading message
+      loading.style.display = 'block';
+      loading.textContent = 'You got it! 😊';
+      form.querySelector('button').disabled = true;
       
       try {
         const response = await fetch('/api/supplement', {
@@ -72,18 +74,21 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(error.error || 'Something went wrong');
         }
 
-        // Create new container content with initial message
+        // Add a 1.5 second delay before starting the stream
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        
+        // Start transition
+        container.classList.add('fade-out');
+        
+        // Create new container content
         container.innerHTML = `
           <div id="result" class="fade-in">
             <div class="result-card">
               <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
-              <div id="streaming-content" style="color:#fefef1;min-height:50px;">You got it! 😊</div>
+              <div id="streaming-content" style="color:#fefef1;"></div>
             </div>
           </div>
         `;
-
-        // Add a 1.5 second delay before starting the stream
-        await new Promise(resolve => setTimeout(resolve, 1500));
         
         const streamingContent = document.getElementById('streaming-content');
         const reader = response.body.getReader();
@@ -107,8 +112,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (content) {
                   accumulatedContent += content;
                   streamingContent.innerHTML = accumulatedContent;
-                  // Ensure content is visible
-                  streamingContent.style.color = '#fefef1';
                 }
               } catch (e) {
                 console.error('Error parsing SSE data:', e);
@@ -126,14 +129,9 @@ document.addEventListener('DOMContentLoaded', function () {
         
       } catch (err) {
         console.error('Fetch error:', err);
-        container.innerHTML = `
-          <div id="result" class="fade-in">
-            <div class="result-card" style="color:#ffb4b4;">
-              ${err.message || 'Network error. Please check your connection and try again.'}
-            </div>
-            <button class="reset-btn" onclick="resetUI()">Try Again</button>
-          </div>
-        `;
+        loading.style.display = 'none';
+        form.querySelector('button').disabled = false;
+        showResult(`<div class="result-card" style="color:#ffb4b4;">${err.message || 'Network error. Please check your connection and try again.'}</div>`);
       }
     });
   }
