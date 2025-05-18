@@ -106,6 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (content) {
                   accumulatedContent += content;
                   streamingContent.innerHTML = accumulatedContent;
+                  streamingContent.style.display = 'block';
                 }
               } catch (e) {
                 console.error('Error parsing SSE data:', e);
@@ -194,6 +195,9 @@ document.addEventListener('DOMContentLoaded', function () {
       padding: 15px;
       border-radius: 6px;
       margin-top: 1em;
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
     }
     
     .reset-btn {
