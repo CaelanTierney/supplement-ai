@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       container.classList.remove('fade-out');
       container.classList.add('fade-in');
       document.getElementById('reset-btn').onclick = resetUI;
-    }, 200);
+    }, 100);
   }
 
   function resetUI() {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <div id="result"></div>
       `;
       attachFormHandler();
-    }, 200);
+    }, 100);
   }
 
   function attachFormHandler() {
@@ -45,17 +45,26 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       const supplement = document.getElementById('supplement').value.trim();
       const outcome = document.getElementById('outcome').value.trim();
+      
       result.innerHTML = '';
       loading.style.display = 'block';
       form.querySelector('button').disabled = true;
+      
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000);
+        
         const res = await fetch('/api/supplement', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ supplement, outcome })
+          body: JSON.stringify({ supplement, outcome }),
+          signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
         const data = await res.json();
         loading.style.display = 'none';
+        
         if (res.ok && data.result) {
           showResult(`<div class=\"result-card\"><h2 style='margin-top:0;font-size:1.1em;font-weight:700;'>What do you think of ${supplement} for ${outcome}?</h2>${data.result.replace(/\n/g, '<br>')}</div>`);
         } else if (data.error) {
@@ -67,7 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error('Fetch error:', err);
         loading.style.display = 'none';
         form.querySelector('button').disabled = false;
-        showResult(`<div class=\"result-card\" style=\"color:#ffb4b4;\">Network error. Please check your connection and try again.</div>`);
+        
+        if (err.name === 'AbortError') {
+          showResult(`<div class=\"result-card\" style=\"color:#ffb4b4;\">Request timed out. Please try again.</div>`);
+        } else {
+          showResult(`<div class=\"result-card\" style=\"color:#ffb4b4;\">Network error. Please check your connection and try again.</div>`);
+        }
       }
     });
   }
