@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
       container.classList.remove('fade-out');
       container.classList.add('fade-in');
       attachFormHandler();
-    }, 300);
+    }, 150);
   }
 
   function attachFormHandler() {
@@ -134,7 +134,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const style = document.createElement('style');
   style.textContent = `
     .container {
-      transition: opacity 0.5s ease;
+      transition: opacity 0.3s ease;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
     }
     
     .fade-out {
@@ -154,15 +160,18 @@ document.addEventListener('DOMContentLoaded', function () {
       font-size: 1.08em;
       line-height: 1.6;
       width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
       box-sizing: border-box;
       border: 1px solid rgba(35, 49, 73, 0.2);
       max-height: 80vh;
       overflow-y: auto;
+      transition: opacity 0.3s ease;
     }
     
     .result-card h2 {
       color: #fefef1;
-      margin-bottom: 1em;
+      margin-bottom: 0.5em;
     }
     
     .result-card h3 {
@@ -192,14 +201,15 @@ document.addEventListener('DOMContentLoaded', function () {
       background: #233149;
       padding: 15px;
       border-radius: 6px;
-      margin-top: 1em;
+      margin-top: 0.5em;
+      margin-bottom: 0;
       display: block;
       width: 100%;
       box-sizing: border-box;
     }
     
     .reset-btn {
-      margin: 24px auto 0 auto;
+      margin: 12px auto 0 auto;
       display: block;
       padding: 12px 24px;
       border-radius: 6px;
