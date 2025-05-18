@@ -32,6 +32,12 @@ const getSupplementEvidence = async (supplement, outcome) => {
           5. Do not exaggerate benefits or downplay risks
           6. Limit your response to 2-3 paragraphs
           
+          Format your response using a mix of:
+          - Bullet points (•) for key findings
+          - Numbered lists for steps or sequences
+          - Checkboxes (☐) for benefits/effects
+          - Emojis for engagement (1-2 per response)
+          
           If there's insufficient information, be honest about the limitations of current research.`
         },
         {
@@ -58,7 +64,14 @@ async function getCompletion(prompt) {
     const response = await openai.chat.completions.create({
       model: 'gpt-4-turbo-preview',
       messages: [
-        { role: 'system', content: 'You are a helpful, evidence-based supplement research assistant.' },
+        { role: 'system', content: `You are a helpful, evidence-based supplement research assistant. 
+        Format your responses using a mix of:
+        - Bullet points (•) for key findings
+        - Numbered lists for steps or sequences
+        - Checkboxes (☐) for benefits/effects
+        - Emojis for engagement (1-2 per response)
+        
+        Keep responses concise but thorough, using lists to break up text blocks.` },
         { role: 'user', content: prompt }
       ],
       max_tokens: 500,

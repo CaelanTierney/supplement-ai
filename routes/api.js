@@ -79,8 +79,14 @@ router.post('/supplement', async (req, res) => {
 - If there is no human evidence, say so clearly.
 - If there is evidence, summarize the strength, quality, and what examine.com suggests (including typical dosage, best forms, and populations, if available).
 - Reference examine.com's most recent research and recommendations.
-- Use 1–2 relevant emojis for engagement.
-- Be concise but thorough.`;
+
+Format your response using a mix of:
+• Bullet points for key findings
+• Numbered lists for steps or sequences
+☐ Checkboxes for benefits/effects
+• Emojis for engagement (1-2 per response)
+
+Keep responses concise but thorough, using lists to break up text blocks.`;
 
     console.log('Sending request to OpenAI...');
     const aiResponse = await openaiService.getCompletion(prompt);
