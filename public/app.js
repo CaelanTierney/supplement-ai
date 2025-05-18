@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', function () {
                   accumulatedContent += content;
                   streamingContent.innerHTML = accumulatedContent;
                   streamingContent.style.display = 'block';
+                  // Scroll to the bottom of the content
+                  streamingContent.scrollTop = streamingContent.scrollHeight;
                 }
               } catch (e) {
                 console.error('Error parsing SSE data:', e);
