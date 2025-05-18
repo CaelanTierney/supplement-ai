@@ -41,7 +41,7 @@ const getSupplementEvidence = async (supplement, outcome) => {
   }
 };
 
-async function getCompletion(prompt) {
+async function getCompletion(prompt, stream = false) {
   try {
     console.log('Making OpenAI API request...');
     const response = await openai.chat.completions.create({
@@ -53,8 +53,13 @@ async function getCompletion(prompt) {
       max_tokens: 600,
       temperature: 0.1,
       presence_penalty: 0,
-      frequency_penalty: 0
+      frequency_penalty: 0,
+      stream: stream
     });
+
+    if (stream) {
+      return response;
+    }
 
     if (!response.choices?.[0]?.message?.content) {
       throw new Error('Invalid response from OpenAI');

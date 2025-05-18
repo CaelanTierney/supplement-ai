@@ -58,27 +58,66 @@ document.addEventListener('DOMContentLoaded', function () {
       form.querySelector('button').disabled = true;
       
       try {
-        const res = await fetch('/api/supplement', {
+        const response = await fetch('/api/supplement', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ supplement, outcome })
         });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || 'Something went wrong');
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let accumulatedContent = '';
         
-        const data = await res.json();
+        // Create result container
+        const resultCard = document.createElement('div');
+        resultCard.className = 'result-card';
+        resultCard.innerHTML = `<h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>`;
+        result.appendChild(resultCard);
+        
         loading.style.display = 'none';
         
-        if (res.ok && data.result) {
-          showResult(`<div class="result-card"><h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>${data.result}</div>`);
-        } else if (data.error) {
-          showResult(`<div class="result-card" style="color:#ffb4b4;">${data.error}</div>`);
-        } else {
-          showResult(`<div class="result-card" style="color:#ffb4b4;">Sorry, something went wrong.</div>`);
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+          
+          for (const line of lines) {
+            if (line.startsWith('data: ')) {
+              const data = line.slice(6);
+              if (data === '[DONE]') continue;
+              
+              try {
+                const { content } = JSON.parse(data);
+                if (content) {
+                  accumulatedContent += content;
+                  resultCard.innerHTML = `<h2 style="margin-top:0;font-size:1.1em;font-weight:700;">What do you think of ${supplement} for ${outcome}?</h2>${accumulatedContent}`;
+                }
+              } catch (e) {
+                console.error('Error parsing SSE data:', e);
+              }
+            }
+          }
         }
+        
+        // Add reset button after streaming is complete
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'reset-btn';
+        resetBtn.textContent = 'Make Another Search';
+        resetBtn.onclick = resetUI;
+        result.appendChild(resetBtn);
+        
       } catch (err) {
         console.error('Fetch error:', err);
         loading.style.display = 'none';
         form.querySelector('button').disabled = false;
-        showResult(`<div class="result-card" style="color:#ffb4b4;">Network error. Please check your connection and try again.</div>`);
+        showResult(`<div class="result-card" style="color:#ffb4b4;">${err.message || 'Network error. Please check your connection and try again.'}</div>`);
       }
     });
   }
