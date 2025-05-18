@@ -1,0 +1,14 @@
+{
+    "name": "Supplement AI",
+    "short_name": "Supplement AI",
+    "icons": [
+        {
+            "src": "/favicon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#233149",
+    "background_color": "#233149",
+    "display": "standalone"
+} 
