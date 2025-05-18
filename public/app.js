@@ -66,8 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(error.error || 'Something went wrong');
         }
 
-        // Add a 0.75 second delay before starting the stream
+        // Add a 0.75 second delay before showing the result
         await new Promise(resolve => setTimeout(resolve, 750));
+        
+        const data = await response.json();
         
         // Create new container content with fade-in
         container.classList.add('fade-out');
@@ -76,54 +78,20 @@ document.addEventListener('DOMContentLoaded', function () {
             <div id="result" class="fade-in">
               <div class="result-card">
                 <h2 style="margin-top:0;font-size:1.1em;font-weight:700;color:#fefef1;">What do you think of ${supplement} for ${outcome}?</h2>
-                <div id="streaming-content" class="streaming-content"></div>
+                <div class="streaming-content">${data.content}</div>
               </div>
             </div>
           `;
           container.classList.remove('fade-out');
           container.classList.add('fade-in');
-        }, 500);
-        
-        const streamingContent = document.getElementById('streaming-content');
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let accumulatedContent = '';
-        
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
           
-          const chunk = decoder.decode(value);
-          const lines = chunk.split('\n');
-          
-          for (const line of lines) {
-            if (line.startsWith('data: ')) {
-              const data = line.slice(6);
-              if (data === '[DONE]') continue;
-              
-              try {
-                const { content } = JSON.parse(data);
-                if (content) {
-                  accumulatedContent += content;
-                  streamingContent.innerHTML = accumulatedContent;
-                  streamingContent.style.display = 'block';
-                  streamingContent.scrollTop = streamingContent.scrollHeight;
-                  // Force a reflow to ensure content is visible
-                  streamingContent.offsetHeight;
-                }
-              } catch (e) {
-                console.error('Error parsing SSE data:', e);
-              }
-            }
-          }
-        }
-        
-        // Add reset button after streaming is complete
-        const resetBtn = document.createElement('button');
-        resetBtn.className = 'reset-btn';
-        resetBtn.textContent = 'Make Another Search';
-        resetBtn.onclick = resetUI;
-        container.querySelector('#result').appendChild(resetBtn);
+          // Add reset button
+          const resetBtn = document.createElement('button');
+          resetBtn.className = 'reset-btn';
+          resetBtn.textContent = 'Make Another Search';
+          resetBtn.onclick = resetUI;
+          container.querySelector('#result').appendChild(resetBtn);
+        }, 300);
         
       } catch (err) {
         console.error('Fetch error:', err);

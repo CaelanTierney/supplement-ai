@@ -117,28 +117,8 @@ Keep responses thorough but concise—no fluff, just clear, accurate, consumer-f
 
     console.log('Sending request to OpenAI...');
     
-    // Set headers for streaming
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('X-Accel-Buffering', 'no'); // Disable proxy buffering
-    
-    const stream = await openaiService.getCompletion(prompt, true);
-    
-    for await (const chunk of stream) {
-      const content = chunk.choices[0]?.delta?.content || '';
-      if (content) {
-        res.write(`data: ${JSON.stringify({ content })}\n\n`);
-        // Flush the response to ensure immediate delivery
-        if (res.flushHeaders) {
-          res.flushHeaders();
-        }
-      }
-    }
-    
-    res.write('data: [DONE]\n\n');
-    res.end();
+    const response = await openaiService.getCompletion(prompt, false);
+    res.json({ content: response });
   } catch (error) {
     console.error('Error in /api/supplement:', error);
     
