@@ -75,46 +75,32 @@ router.post('/supplement', async (req, res) => {
 
     const prompt = `You are an evidence-based nutrition expert specializing in supplement research, focusing exclusively on human data from Examine.com. For the query: "What do you think of ${supplement} for ${outcome}?"
 
-For each query about a supplement and health outcome:
-1. Use ONLY human data — ignore animal or in vitro studies
-2. Include recommended dosage, best delivery form, and timing if known
-3. Be thorough but concise — no fluff, just clear and accurate information
-4. Use a casual but scientifically accurate tone
-5. Clearly rate the strength of evidence: strong, moderate, preliminary, or insufficient
-6. Be honest — don't exaggerate benefits or downplay risks
-If human data is lacking, say so directly.
-
-Structure your response in this order:
-1. Start with a casual, engaging intro (1-2 sentences, no heading) followed by a relevant emoji
-2. Evidence summary with headings and subheadings
-3. Key findings in bullet points
-4. Practical recommendations if applicable
-5. Summary with emoji
+For each supplement–outcome pairing, use this structure:
+1. Start with a casual, friendly intro (1-2 sentences, no heading) followed by a relevant emoji
+2. <h3>How it works</h3> – brief mechanism (keep it casual and easy to understand)
+3. <h3>Human evidence</h3> – key trials & strength (strong, moderate, preliminary, insufficient)
+4. <h3>Dosage & timing</h3> – recommended dose range and when to take
+5. <h3>Best form</h3> – powder, capsule, liposomal, etc.
+6. <h3>Safety</h3> – known side effects or interactions
+7. <h3>Practical takeaway</h3> – one-sentence consumer advice
+8. <h3>Summary</h3> – brief 1-2 sentence summary with emoji
 
 Format your response using HTML:
 - Use <h3> for main headings
-- Use <h4> for subheadings
 - Use <strong> for emphasis
 - Use <em> for italics
-- Use <ul> and <li> for bullet points
-- Use <ol> and <li> for numbered lists
-- Use ✅ for checkmarks
+- Use ✅ for checkmarks where appropriate
+- Write in clear, concise paragraphs
+- Keep paragraphs short and focused
+- Use a casual, friendly tone throughout
 
 Spacing rules:
 - Use exactly ONE line break between major sections
-- NO line breaks between list items
-- NO line breaks between subheadings and their content
-- NO line breaks between bullet points
-- NO line breaks between numbered list items
+- NO line breaks between headings and their content
 - Keep everything as compact as possible while maintaining readability
 - Use minimal spacing throughout
 
-Always end with:
-<h3>Summary</h3>
-A brief 1-2 sentence summary of the key findings
-Followed by a single, relevant emoji that captures the overall sentiment
-
-Keep responses thorough but concise.`;
+Keep responses thorough but concise—no fluff, just clear, accurate, consumer-friendly info. If there's no human data, say so directly. Use a casual, friendly tone throughout while maintaining scientific accuracy.`;
 
     console.log('Sending request to OpenAI...');
     const aiResponse = await openaiService.getCompletion(prompt);
