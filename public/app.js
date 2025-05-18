@@ -75,6 +75,9 @@ document.addEventListener('DOMContentLoaded', function () {
             </div>
           </div>
         `;
+
+        // Add a 1.5 second delay before starting the stream
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
         const streamingContent = document.getElementById('streaming-content');
         const reader = response.body.getReader();
