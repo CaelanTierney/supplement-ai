@@ -70,13 +70,10 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error(error.error || 'Something went wrong');
         }
 
-        // Add a 1.5 second delay before starting the stream
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Add a 0.75 second delay before starting the stream
+        await new Promise(resolve => setTimeout(resolve, 750));
         
-        // Start transition
-        container.classList.add('fade-out');
-        
-        // Create new container content
+        // Create new container content with fade-in
         container.innerHTML = `
           <div id="result" class="fade-in">
             <div class="result-card">
