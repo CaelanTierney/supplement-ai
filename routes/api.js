@@ -112,7 +112,12 @@ Followed by a single, relevant emoji that captures the overall sentiment
 Keep responses thorough but concise.`;
 
     console.log('Sending request to OpenAI...');
-    const aiResponse = await openaiService.getCompletion(prompt);
+    const aiResponse = await Promise.race([
+      openaiService.getCompletion(prompt),
+      new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timed out')), 7000)
+      )
+    ]);
     console.log('Received response from OpenAI');
     
     res.json({ result: aiResponse });
@@ -120,6 +125,9 @@ Keep responses thorough but concise.`;
     console.error('Error in /api/supplement:', error);
     
     // Handle specific error cases
+    if (error.message === 'Request timed out') {
+      return res.status(504).json({ error: 'Request timed out. Please try again.' });
+    }
     if (error.message.includes('API key')) {
       return res.status(500).json({ error: 'Server configuration error. Please try again later.' });
     }
